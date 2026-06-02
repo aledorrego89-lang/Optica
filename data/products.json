@@ -1,0 +1,103 @@
+[
+    {
+        "id": "rb-aviator-classic",
+        "name": "Aviator Classic",
+        "brand": "Ray-Ban",
+        "price": 119900,
+        "category": "sunglasses",
+        "color": "Dorado",
+        "image_url": "",
+        "overlay_url": "\/uploads\/products\/img_6a1ea2aed7ee3.png",
+        "in_stock": false,
+        "description": "Cl\u00e1sicos aviator met\u00e1licos con lentes oscuros.",
+        "created_at": "2026-05-14T00:00:00+00:00",
+        "gallery": [],
+        "images": [
+            "\/uploads\/products\/img_6a1ea2a53c6d9.png",
+            "\/uploads\/products\/img_6a1ea2a59c510.jpg",
+            "\/uploads\/products\/img_6a1ea2a5dc510.jpg",
+            "\/uploads\/products\/img_6a1ea2a644883.jpg",
+            "\/uploads\/products\/img_6a1ea2a6d4212.jpg",
+            "\/uploads\/products\/img_6a1ea2a7004ab.jpg"
+        ]
+    },
+    {
+        "id": "rb-wayfarer-black",
+        "name": "Wayfarer Black",
+        "brand": "Ray-Ban",
+        "price": 119900,
+        "category": "sunglasses",
+        "color": "Negro",
+        "image_url": "",
+        "overlay_url": "\/uploads\/products\/img_6a1e10ed618d8.png",
+        "in_stock": true,
+        "description": "El modelo m\u00e1s ic\u00f3nico, estilo urbano.",
+        "created_at": "2026-05-14T00:00:01+00:00",
+        "gallery": []
+    },
+    {
+        "id": "ocular-minimal-clear",
+        "name": "Minimal Clear",
+        "brand": "Ocular",
+        "price": 89900,
+        "category": "optical",
+        "color": "Transparente",
+        "image_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/bf5428814_generated_image.png",
+        "overlay_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/bf5428814_generated_image.png",
+        "in_stock": true,
+        "description": "Armaz\u00f3n liviano y moderno para uso diario.",
+        "created_at": "2026-05-14T00:00:02+00:00"
+    },
+    {
+        "id": "ocular-blue-light-pro",
+        "name": "Blue Light Pro",
+        "brand": "Ocular",
+        "price": 79900,
+        "category": "sunglasses",
+        "color": "Negro Mate",
+        "image_url": "https:\/\/tse3.mm.bing.net\/th\/id\/OIP.JXW5hmzc2Z1XOLpwfogwWwHaHa?w=1060&h=1060&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "overlay_url": "https:\/\/tse3.mm.bing.net\/th\/id\/OIP.JXW5hmzc2Z1XOLpwfogwWwHaHa?w=1060&h=1060&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "in_stock": true,
+        "description": "Protecci\u00f3n contra luz azul para pantallas.",
+        "created_at": "2026-05-14T00:00:03+00:00"
+    },
+    {
+        "id": "vision-reading-light",
+        "name": "Reading Light",
+        "brand": "Vision",
+        "price": 45900,
+        "category": "reading",
+        "color": "Gris",
+        "image_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/30b906b45_generated_image.png",
+        "overlay_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/30b906b45_generated_image.png",
+        "in_stock": true,
+        "description": "Lentes livianos para lectura prolongada.",
+        "created_at": "2026-05-14T00:00:04+00:00"
+    },
+    {
+        "id": "oakvision-sport-shield",
+        "name": "Sport Shield",
+        "brand": "OakVision",
+        "price": 149900,
+        "category": "Optico",
+        "color": "Negro Deportivo",
+        "image_url": "https:\/\/clipart-library.com\/2023\/417-4175377_nerdy-glasses-clipart-free-download-best-on-glasses.png",
+        "overlay_url": "https:\/\/clipart-library.com\/2023\/417-4175377_nerdy-glasses-clipart-free-download-best-on-glasses.png",
+        "in_stock": true,
+        "description": "Dise\u00f1o envolvente para deportes y outdoor.",
+        "created_at": "2026-05-14T00:00:05+00:00"
+    },
+    {
+        "id": "test-001",
+        "name": "test",
+        "brand": "a",
+        "price": 123000,
+        "category": "optical",
+        "color": "r",
+        "image_url": "https:\/\/pngimg.com\/uploads\/glasses\/glasses_PNG54277.png",
+        "overlay_url": "https:\/\/pngimg.com\/uploads\/glasses\/glasses_PNG54277.png",
+        "in_stock": true,
+        "description": "",
+        "created_at": "2026-05-14T22:58:33+00:00"
+    }
+]

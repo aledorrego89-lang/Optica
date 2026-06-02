@@ -1,0 +1,117 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "description": "ID of the selected product"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "product_price": {
+      "type": "number"
+    },
+    "prescription_url": {
+      "type": "string",
+      "description": "Uploaded prescription image URL"
+    },
+    "prescription_data": {
+      "type": "object",
+      "description": "Extracted prescription data",
+      "properties": {
+        "sphere_right": {
+          "type": "string"
+        },
+        "sphere_left": {
+          "type": "string"
+        },
+        "cylinder_right": {
+          "type": "string"
+        },
+        "cylinder_left": {
+          "type": "string"
+        },
+        "axis_right": {
+          "type": "string"
+        },
+        "axis_left": {
+          "type": "string"
+        },
+        "addition": {
+          "type": "string"
+        },
+        "pupillary_distance": {
+          "type": "string"
+        }
+      }
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "customer_phone": {
+      "type": "string"
+    },
+    "shipping_address": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "prescription_review",
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "total": {
+      "type": "number"
+    },
+    "try_on_photo_url": {
+      "type": "string",
+      "description": "Photo used for virtual try-on"
+    }
+  },
+  "required": [
+    "product_id",
+    "product_name",
+    "total"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

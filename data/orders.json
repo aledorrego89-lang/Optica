@@ -1,0 +1,48 @@
+[
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-wayfarer-black",
+                "name": "Wayfarer Black",
+                "price": 119900,
+                "image_url": "\/uploads\/products\/img_6a1dcd97b32cc.png",
+                "brand": "Ray-Ban",
+                "category": "sunglasses"
+            }
+        ],
+        "total": 119900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1dd2adf4147.jpeg",
+        "id": "6a1dd2c2dc476",
+        "status": "Pendiente",
+        "created_at": "2026-06-01T18:43:14+00:00"
+    },
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-aviator-classic",
+                "name": "Aviator Classic",
+                "price": 119900,
+                "image_url": "\/uploads\/products\/img_6a1df402b0a37.png",
+                "brand": "Ray-Ban",
+                "category": "sunglasses"
+            }
+        ],
+        "total": 119900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1e0396103c2.pdf",
+        "id": "6a1e03a85f5cc",
+        "status": "Pendiente",
+        "created_at": "2026-06-01T22:11:52+00:00"
+    }
+]

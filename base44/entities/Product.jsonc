@@ -1,0 +1,73 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the eyewear"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Brand name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "optical",
+        "sunglasses",
+        "blue_light",
+        "reading"
+      ],
+      "description": "Type of eyewear"
+    },
+    "price": {
+      "type": "number",
+      "description": "Price in USD"
+    },
+    "description": {
+      "type": "string",
+      "description": "Product description"
+    },
+    "material": {
+      "type": "string",
+      "enum": [
+        "acetate",
+        "titanium",
+        "stainless_steel",
+        "wood",
+        "mixed"
+      ],
+      "description": "Frame material"
+    },
+    "color": {
+      "type": "string",
+      "description": "Frame color"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Product image URL"
+    },
+    "overlay_url": {
+      "type": "string",
+      "description": "Transparent PNG overlay for try-on"
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "unisex",
+        "men",
+        "women"
+      ],
+      "default": "unisex"
+    },
+    "in_stock": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "price",
+    "category"
+  ]
+}
