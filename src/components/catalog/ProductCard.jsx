@@ -58,22 +58,20 @@ console.log("PRODUCT:", product);
 <div className="aspect-square overflow-hidden bg-muted/50 relative">
 
   {images.length > 0 ? (
-    <div className="relative w-full h-full">
-
-      {images.map((img, idx) => (
-        <img
-          key={idx}
-          src={img}
-          alt={`${product.name}-${idx}`}
-          className={`absolute inset-0 w-full h-full object-contain transition-all duration-[1200ms] ${
-            idx === currentImage
-              ? 'opacity-100 scale-100'
-              : 'opacity-0 scale-105'
-          }`}
-        />
-      ))}
-
-    </div>
+<div className="relative w-full h-full">
+  {images.map((img, idx) => (
+    <img
+      key={idx}
+      src={img}
+      alt=""
+      style={{
+        opacity: idx === currentImage ? 1 : 0,
+        transition: 'opacity 1s ease-in-out',
+      }}
+      className="absolute inset-0 w-full h-full object-contain"
+    />
+  ))}
+</div>
 
   ) : (
     <div className="w-full h-full flex items-center justify-center">
