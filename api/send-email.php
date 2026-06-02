@@ -63,7 +63,7 @@ tu pedido fue recibido exitosamente.
 
 foreach ($cart as $item) {
 
-$img = $item['image_url'] ?? '';
+$img = $item['overlay_url'] ?? '';
 
 if (!empty($img) && !str_starts_with($img, 'http')) {
     $img = $baseUrl . $img;

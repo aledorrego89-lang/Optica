@@ -67,6 +67,7 @@ export default function Checkout() {
         prescriptionUrl: prescription?.file_url || null,
       };
 
+      console.log('CART ENVIADO:', cart);
       // guardar orden en PHP
 const orderRes = await createOrder(orderData);
 

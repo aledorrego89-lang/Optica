@@ -5,18 +5,22 @@ export function getCart() {
 export function addToCart(product) {
   const cart = getCart();
   const exists = cart.find(item => item.id === product.id);
+console.log("Product", product)
   if (!exists) {
     cart.push({
       id: product.id,
       name: product.name,
       price: product.price,
-      image_url: product.image_url,
+      image_url: product.images[0],
+      overlay_url: product.images[0], // 👈 AGREGAR ESTO
       brand: product.brand,
       category: product.category,
     });
+
     localStorage.setItem('ocular_cart', JSON.stringify(cart));
     window.dispatchEvent(new Event('cartUpdated'));
   }
+
   return cart;
 }
 

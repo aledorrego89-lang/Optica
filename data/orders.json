@@ -42,7 +42,7 @@
         "total": 119900,
         "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1e0396103c2.pdf",
         "id": "6a1e03a85f5cc",
-        "status": "Pendiente",
+        "status": "En proceso",
         "created_at": "2026-06-01T22:11:52+00:00"
     },
     {
@@ -67,5 +67,167 @@
         "id": "6a1eb14924032",
         "status": "Pendiente",
         "created_at": "2026-06-02T10:32:41+00:00"
+    },
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-wayfarer-black",
+                "name": "Wayfarer Black",
+                "price": 119900,
+                "image_url": "",
+                "brand": "Ray-Ban",
+                "category": "sunglasses"
+            }
+        ],
+        "total": 119900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1ec7757978c.pdf",
+        "id": "6a1ec77c0a2c5",
+        "status": "Terminados",
+        "created_at": "2026-06-02T12:07:24+00:00"
+    },
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-aviator-classic",
+                "name": "Aviator Classic",
+                "price": 119900,
+                "image_url": "",
+                "brand": "Ray-Ban",
+                "category": "optical"
+            }
+        ],
+        "total": 119900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1ecbb036612.pdf",
+        "id": "6a1ecbba0740b",
+        "status": "Pendiente",
+        "created_at": "2026-06-02T12:25:30+00:00"
+    },
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-aviator-classic",
+                "name": "Aviator Classic",
+                "price": 119900,
+                "image_url": "",
+                "brand": "Ray-Ban",
+                "category": "optical"
+            }
+        ],
+        "total": 119900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1ecd0286e6c.pdf",
+        "id": "6a1ecd087abc3",
+        "status": "Pendiente",
+        "created_at": "2026-06-02T12:31:04+00:00"
+    },
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-aviator-classic",
+                "name": "Aviator Classic",
+                "price": 119900,
+                "image_url": "",
+                "brand": "Ray-Ban",
+                "category": "optical"
+            }
+        ],
+        "total": 119900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1ecd66495de.jpeg",
+        "id": "6a1ecd6fd8419",
+        "status": "Pendiente",
+        "created_at": "2026-06-02T12:32:47+00:00"
+    },
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-aviator-classic",
+                "name": "Aviator Classic",
+                "price": 119900,
+                "image_url": "",
+                "brand": "Ray-Ban",
+                "category": "optical"
+            }
+        ],
+        "total": 119900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1ece3987968.jpeg",
+        "id": "6a1ece4014633",
+        "status": "Pendiente",
+        "created_at": "2026-06-02T12:36:16+00:00"
+    },
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-aviator-classic",
+                "name": "Aviator Classic",
+                "price": 119900,
+                "image_url": "",
+                "brand": "Ray-Ban",
+                "category": "optical"
+            }
+        ],
+        "total": 119900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1ece9dc58f4.jpeg",
+        "id": "6a1ecea43b4f5",
+        "status": "Pendiente",
+        "created_at": "2026-06-02T12:37:56+00:00"
+    },
+    {
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Sarmiento 1369"
+        },
+        "cart": [
+            {
+                "id": "rb-wayfarer-black",
+                "name": "Wayfarer Black",
+                "price": 89900,
+                "image_url": "\/uploads\/products\/img_6a1ea7549cf92.png",
+                "overlay_url": "\/uploads\/products\/img_6a1ea7549cf92.png",
+                "brand": "Ray-Ban",
+                "category": "optical"
+            }
+        ],
+        "total": 89900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1ed1ca03bb4.jpeg",
+        "id": "6a1ed1d115f38",
+        "status": "Pendiente",
+        "created_at": "2026-06-02T12:51:29+00:00"
     }
 ]
