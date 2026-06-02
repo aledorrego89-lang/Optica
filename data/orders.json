@@ -44,5 +44,28 @@
         "id": "6a1e03a85f5cc",
         "status": "Pendiente",
         "created_at": "2026-06-01T22:11:52+00:00"
+    },
+    {
+        "customer": {
+            "name": "Micaela Gonzalez",
+            "email": "ale_dorrego89@hotmail.com",
+            "phone": "+542921425434",
+            "address": "Rio Uruguay 52"
+        },
+        "cart": [
+            {
+                "id": "rb-wayfarer-black",
+                "name": "Wayfarer Black",
+                "price": 89900,
+                "image_url": "",
+                "brand": "Ray-Ban",
+                "category": "optical"
+            }
+        ],
+        "total": 89900,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a1eb13ecbff2.jpeg",
+        "id": "6a1eb14924032",
+        "status": "Pendiente",
+        "created_at": "2026-06-02T10:32:41+00:00"
     }
 ]

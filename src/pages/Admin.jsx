@@ -173,17 +173,33 @@ export default function Admin() {
 
   /* ========================= MUTATIONS ========================= */
 
-  const deleteMutation = useMutation({
-    mutationFn: deleteProduct,
+const deleteMutation = useMutation({
+  mutationFn: async (id) => {
+    const res = await fetch(`/api/products.php?id=${id}`, {
+      method: 'DELETE',
+    });
 
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['admin-products'],
-      });
+    const data = await res.json();
 
-      toast.success('Producto eliminado');
-    },
-  });
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || 'Error eliminando producto');
+    }
+
+    return data;
+  },
+
+  onSuccess: () => {
+    queryClient.invalidateQueries({
+      queryKey: ['admin-products'],
+    });
+
+    toast.success('Producto eliminado');
+  },
+
+  onError: (err) => {
+    toast.error(err.message);
+  },
+});
 
   const orderStatusMutation = useMutation({
     mutationFn: updateOrderStatus,
@@ -336,7 +352,7 @@ export default function Admin() {
   const cancelForm = () => {
 
     setGalleryImages([]);
-    
+
     setShowForm(false);
 
     setEditingId(null);
@@ -442,28 +458,83 @@ export default function Admin() {
     }
   };
 
-const handleDeleteOverlay = async () => {
-  if (!form.overlay_url) return;
+  const handleDeleteOverlay = async () => {
+    if (!form.overlay_url) return;
 
-  try {
-    await fetch('/api/delete-file.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ path: form.overlay_url }),
-    });
+    try {
+      await fetch('/api/delete-file.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: form.overlay_url }),
+      });
 
-    setForm((prev) => ({
-      ...prev,
-      overlay_url: '',
-    }));
+      setForm((prev) => ({
+        ...prev,
+        overlay_url: '',
+      }));
 
-    toast.success('Overlay eliminado');
-  } catch (err) {
-    toast.error('Error eliminando overlay');
-  }
-};
+      toast.success('Overlay eliminado');
+    } catch (err) {
+      toast.error('Error eliminando overlay');
+    }
+  };
 
+  //carrusel/////////////
 
+  const ProductCardCarousel = ({ images = [] }) => {
+    const [index, setIndex] = React.useState(0);
+
+    if (!images.length) {
+      return (
+        <div className="w-full h-40 flex items-center justify-center border rounded">
+          Sin imagen
+        </div>
+      );
+    }
+
+    const next = (e) => {
+      e.stopPropagation();
+      setIndex((prev) => (prev + 1) % images.length);
+    };
+
+    const prev = (e) => {
+      e.stopPropagation();
+      setIndex((prev) =>
+        prev === 0 ? images.length - 1 : prev - 1
+      );
+    };
+
+    return (
+      <div className="relative w-full h-40">
+        <img
+          src={images[index]}
+          className="w-full h-40 object-contain rounded"
+        />
+
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={prev}
+              className="absolute left-1 top-1/2 -translate-y-1/2 bg-black/50 text-white w-6 h-6 rounded"
+            >
+              ‹
+            </button>
+
+            <button
+              onClick={next}
+              className="absolute right-1 top-1/2 -translate-y-1/2 bg-black/50 text-white w-6 h-6 rounded"
+            >
+              ›
+            </button>
+
+            <div className="absolute bottom-1 right-1 text-xs bg-black/50 text-white px-2 rounded">
+              {index + 1}/{images.length}
+            </div>
+          </>
+        )}
+      </div>
+    );
+  };
 
 
   return (
@@ -572,17 +643,22 @@ const handleDeleteOverlay = async () => {
                 }
               />
 
-              <Input
-                placeholder="Categoría"
-                value={form.category}
-                onChange={(e) =>
-                  setForm({
-                    ...form,
-                    category:
-                      e.target.value,
-                  })
-                }
-              />
+<select
+  value={form.category}
+  onChange={(e) =>
+    setForm({
+      ...form,
+      category: e.target.value,
+    })
+  }
+  className="w-full h-10 px-3 border rounded-md bg-background"
+>
+  <option value="">Seleccionar categoría</option>
+  <option value="optical">Óptico</option>
+  <option value="sunglasses">Sol</option>
+  <option value="blue_light">Luz Azul</option>
+  <option value="reading">Lectura</option>
+</select>
 
               <Input
                 placeholder="Descripción"
@@ -635,23 +711,23 @@ const handleDeleteOverlay = async () => {
                   onChange={handleOverlayUpload}
                 />
 
-{form.overlay_url && (
-  <div className="relative inline-block group">
-    <img
-      src={form.overlay_url}
-      alt="Overlay Preview"
-      className="w-40 h-40 object-contain border rounded-lg p-2"
-    />
+                {form.overlay_url && (
+                  <div className="relative inline-block group">
+                    <img
+                      src={form.overlay_url}
+                      alt="Overlay Preview"
+                      className="w-40 h-40 object-contain border rounded-lg p-2"
+                    />
 
-    <button
-      type="button"
-      onClick={handleDeleteOverlay}
-      className="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 rounded-full text-xs hidden group-hover:flex items-center justify-center"
-    >
-      ×
-    </button>
-  </div>
-)}
+                    <button
+                      type="button"
+                      onClick={handleDeleteOverlay}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 rounded-full text-xs hidden group-hover:flex items-center justify-center"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
 
               </div>
 
@@ -1043,11 +1119,7 @@ const handleDeleteOverlay = async () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {products.map((p) => (
               <div key={p.id} className="border p-3 rounded-xl">
-                {p.images?.[0] ? (
-                  <img src={p.images[0]} className="w-full h-40 object-contain" />
-                ) : (
-                  <div>Sin imagen</div>
-                )}
+                <ProductCardCarousel images={p.images} />
 
                 <p className="font-semibold">{p.name}</p>
                 <p>${p.price}</p>

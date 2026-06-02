@@ -74,11 +74,28 @@ if ($method === "POST") {
 }
 
 if ($method === "DELETE") {
-$id = $_GET['id'] ?? null;
-  $id = $q['id'];
 
-  $data = array_values(array_filter(load(), fn($p) => $p["id"] !== $id));
+  $id = $_GET['id'] ?? null;
+
+  if (!$id) {
+    http_response_code(400);
+    echo json_encode(["error" => "Missing id"]);
+    exit;
+  }
+
+  $data = load();
+
+  $data = array_values(array_filter($data, function ($p) use ($id) {
+    return $p["id"] !== $id;
+  }));
+
   save($data);
 
-  echo json_encode(["ok" => true]);
+  echo json_encode([
+    "ok" => true,
+    "deleted_id" => $id
+  ]);
+
+  exit;
+
 }

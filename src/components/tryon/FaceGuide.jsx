@@ -39,7 +39,7 @@ function FaceCaricature({ offset, tilt }) {
     <motion.div
       animate={{ x: offset.x, y: offset.y, rotate: tilt }}
       transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-      className="relative w-32 h-36 mx-auto"
+className="relative w-32 h-36 mx-auto"
     >
       {/* Head */}
       <motion.div
@@ -62,20 +62,7 @@ function FaceCaricature({ offset, tilt }) {
         />
       </div>
       {/* Glasses */}
-      <motion.div
-        className="absolute top-9 left-3 right-3"
-        animate={{ rotate: tilt * -0.5 }}
-      >
-        {/* Left lens */}
-        <div className="absolute left-0 top-0 w-10 h-8 rounded-lg border-2 border-gray-700 bg-cyan-400/20" />
-        {/* Right lens */}
-        <div className="absolute right-0 top-0 w-10 h-8 rounded-lg border-2 border-gray-700 bg-cyan-400/20" />
-        {/* Bridge */}
-        <div className="absolute left-10 right-10 top-3 h-0.5 bg-gray-700" />
-        {/* Temples */}
-        <div className="absolute -left-3 top-3 w-3 h-0.5 bg-gray-700" />
-        <div className="absolute -right-3 top-3 w-3 h-0.5 bg-gray-700" />
-      </motion.div>
+
       {/* Nose */}
       <div className="absolute top-16 left-1/2 -translate-x-1/2 w-4 h-4">
         <div className="absolute bottom-0 left-0 w-2 h-2 rounded-full bg-amber-300 border border-amber-400" />
@@ -133,10 +120,13 @@ export default function FaceGuide({ onContinue }) {
         ))}
 
         {/* Crosshair */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="absolute w-full h-px bg-primary/10" />
-          <div className="absolute h-full w-px bg-primary/10" />
-        </div>
+<div className="absolute inset-0 pointer-events-none z-20">
+  {/* Horizontal line (eye level) */}
+  <div className="absolute top-[42%] left-0 w-full h-px bg-primary/25" />
+
+  {/* Vertical center line */}
+  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-full w-px bg-primary/15" />
+</div>
 
         {/* Face */}
         <div className="absolute inset-0 flex items-center justify-center">
@@ -186,7 +176,7 @@ export default function FaceGuide({ onContinue }) {
       <div className="mt-5 mb-6 text-left bg-muted/60 rounded-xl p-4 space-y-1.5">
         {[
           '📸 Buena iluminación, de frente',
-          '🎯 Centrá la cara en el óvalo',
+          '🎯 Centrá la cara en el óvalo y la linea horizontal en los ojos',
           '😐 Expresión neutral, sin gafas',
         ].map(tip => (
           <p key={tip} className="text-xs text-muted-foreground">{tip}</p>

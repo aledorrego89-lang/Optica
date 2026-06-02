@@ -4,7 +4,7 @@
         "name": "Aviator Classic",
         "brand": "Ray-Ban",
         "price": 119900,
-        "category": "sunglasses",
+        "category": "optical",
         "color": "Dorado",
         "image_url": "",
         "overlay_url": "\/uploads\/products\/img_6a1ea2aed7ee3.png",
@@ -25,28 +25,36 @@
         "id": "rb-wayfarer-black",
         "name": "Wayfarer Black",
         "brand": "Ray-Ban",
-        "price": 119900,
-        "category": "sunglasses",
+        "price": 89900,
+        "category": "optical",
         "color": "Negro",
         "image_url": "",
-        "overlay_url": "\/uploads\/products\/img_6a1e10ed618d8.png",
+        "overlay_url": "\/uploads\/products\/img_6a1ea75b3e877.png",
         "in_stock": true,
         "description": "El modelo m\u00e1s ic\u00f3nico, estilo urbano.",
         "created_at": "2026-05-14T00:00:01+00:00",
-        "gallery": []
+        "gallery": [],
+        "images": [
+            "\/uploads\/products\/img_6a1ea7549cf92.png",
+            "\/uploads\/products\/img_6a1ea754bf888.jpg",
+            "\/uploads\/products\/img_6a1ea754d66ca.jpg",
+            "\/uploads\/products\/img_6a1ea754f3727.jpg"
+        ]
     },
     {
         "id": "ocular-minimal-clear",
         "name": "Minimal Clear",
         "brand": "Ocular",
         "price": 89900,
-        "category": "optical",
+        "category": "blue_light",
         "color": "Transparente",
         "image_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/bf5428814_generated_image.png",
         "overlay_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/bf5428814_generated_image.png",
         "in_stock": true,
         "description": "Armaz\u00f3n liviano y moderno para uso diario.",
-        "created_at": "2026-05-14T00:00:02+00:00"
+        "created_at": "2026-05-14T00:00:02+00:00",
+        "gallery": [],
+        "images": []
     },
     {
         "id": "ocular-blue-light-pro",
@@ -60,44 +68,5 @@
         "in_stock": true,
         "description": "Protecci\u00f3n contra luz azul para pantallas.",
         "created_at": "2026-05-14T00:00:03+00:00"
-    },
-    {
-        "id": "vision-reading-light",
-        "name": "Reading Light",
-        "brand": "Vision",
-        "price": 45900,
-        "category": "reading",
-        "color": "Gris",
-        "image_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/30b906b45_generated_image.png",
-        "overlay_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/30b906b45_generated_image.png",
-        "in_stock": true,
-        "description": "Lentes livianos para lectura prolongada.",
-        "created_at": "2026-05-14T00:00:04+00:00"
-    },
-    {
-        "id": "oakvision-sport-shield",
-        "name": "Sport Shield",
-        "brand": "OakVision",
-        "price": 149900,
-        "category": "Optico",
-        "color": "Negro Deportivo",
-        "image_url": "https:\/\/clipart-library.com\/2023\/417-4175377_nerdy-glasses-clipart-free-download-best-on-glasses.png",
-        "overlay_url": "https:\/\/clipart-library.com\/2023\/417-4175377_nerdy-glasses-clipart-free-download-best-on-glasses.png",
-        "in_stock": true,
-        "description": "Dise\u00f1o envolvente para deportes y outdoor.",
-        "created_at": "2026-05-14T00:00:05+00:00"
-    },
-    {
-        "id": "test-001",
-        "name": "test",
-        "brand": "a",
-        "price": 123000,
-        "category": "optical",
-        "color": "r",
-        "image_url": "https:\/\/pngimg.com\/uploads\/glasses\/glasses_PNG54277.png",
-        "overlay_url": "https:\/\/pngimg.com\/uploads\/glasses\/glasses_PNG54277.png",
-        "in_stock": true,
-        "description": "",
-        "created_at": "2026-05-14T22:58:33+00:00"
     }
 ]
