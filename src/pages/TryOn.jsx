@@ -24,7 +24,7 @@ const getProducts = async () => {
 export default function TryOn() {
   const [facePhoto, setFacePhoto] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
-const [showGuide, setShowGuide] = useState(true);
+  const [showGuide, setShowGuide] = useState(true);
   const urlParams = new URLSearchParams(window.location.search);
   const preselectedId = urlParams.get('productId');
 
@@ -32,18 +32,18 @@ const [showGuide, setShowGuide] = useState(true);
      QUERY
   ========================= */
 
-const { data: products = [], isLoading } = useQuery({
-  queryKey: ['products-tryon'],
-  queryFn: async () => {
-    const data = await getProducts();
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ['products-tryon'],
+    queryFn: async () => {
+      const data = await getProducts();
 
-    console.log("🔥 RAW API RESPONSE:", data);
-    console.log("📦 TYPE:", typeof data, Array.isArray(data));
+      console.log("🔥 RAW API RESPONSE:", data);
+      console.log("📦 TYPE:", typeof data, Array.isArray(data));
 
-    return data;
-  },
-  initialData: [],
-});
+      return data;
+    },
+    initialData: [],
+  });
 
   /* =========================
      PRESELECT PRODUCT
@@ -69,18 +69,18 @@ const { data: products = [], isLoading } = useQuery({
   /* =========================
      UI
   ========================= */
-const mainImage =
-  selectedProduct?.images?.[0] ||
-  selectedProduct?.overlay_url ||
-  null;
+  const mainImage =
+    selectedProduct?.images?.[0] ||
+    selectedProduct?.overlay_url ||
+    null;
 
-useEffect(() => {
-  console.log("🔥 selectedProduct RAW:");
-  console.log(selectedProduct);
+  useEffect(() => {
+    console.log("🔥 selectedProduct RAW:");
+    console.log(selectedProduct);
 
-  console.log("🧠 JSON:");
-  console.log(JSON.stringify(selectedProduct, null, 2));
-}, [selectedProduct]);
+    console.log("🧠 JSON:");
+    console.log(JSON.stringify(selectedProduct, null, 2));
+  }, [selectedProduct]);
 
   return (
     <div className="pt-20 min-h-screen">
@@ -106,13 +106,13 @@ useEffect(() => {
         </motion.div>
 
         {/* STEP 1 */}
-{!facePhoto ? (
-  showGuide ? (
-    <FaceGuide onContinue={() => setShowGuide(false)} />
-  ) : (
-    <PhotoUpload onPhotoReady={setFacePhoto} />
-  )
-) : (
+        {!facePhoto ? (
+          showGuide ? (
+            <FaceGuide onContinue={() => setShowGuide(false)} />
+          ) : (
+            <PhotoUpload onPhotoReady={setFacePhoto} />
+          )
+        ) : (
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
 
             {/* MIRROR */}
@@ -121,9 +121,9 @@ useEffect(() => {
 
                 <GlassesOverlay
                   facePhoto={facePhoto}
-glassesImage={
-   mainImage
-}
+                  glassesImage={
+                    mainImage
+                  }
                 />
 
                 <div className="flex gap-3 mt-6 justify-center">
@@ -142,10 +142,14 @@ glassesImage={
                   {selectedProduct && (
                     <Button
                       onClick={handleAddToCart}
+                      disabled={!selectedProduct.in_stock}
                       className="rounded-full"
                     >
                       <ShoppingBag className="w-4 h-4 mr-2" />
-                      Agregar al Carrito
+
+                      {selectedProduct.in_stock
+                        ? 'Agregar al Carrito'
+                        : 'Sin stock'}
                     </Button>
                   )}
                 </div>
@@ -192,7 +196,7 @@ glassesImage={
                 </div>
               ) : (
                 <ProductSelector
-                  products={products}
+                  products={products.filter(p => p.in_stock)}
                   selectedId={selectedProduct?.id}
                   onSelect={setSelectedProduct}
                 />

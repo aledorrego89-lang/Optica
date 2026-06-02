@@ -51,9 +51,12 @@ export default function Catalog() {
      FILTERS
   ========================= */
 
-  const filtered = products.filter((p) => {
+const filtered = products
+  .filter((p) => p.in_stock)
+  .filter((p) => {
     const matchCategory =
-      activeCategory === 'all' || p.category === activeCategory;
+      activeCategory === 'all' ||
+      p.category === activeCategory;
 
     const matchSearch =
       !search ||
