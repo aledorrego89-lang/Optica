@@ -5,7 +5,6 @@ export function getCart() {
 export function addToCart(product) {
   const cart = getCart();
   const exists = cart.find(item => item.id === product.id);
-console.log("Product", product)
   if (!exists) {
     cart.push({
       id: product.id,

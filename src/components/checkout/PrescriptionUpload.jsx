@@ -46,7 +46,6 @@ export default function PrescriptionUpload({ onPrescriptionReady }) {
     try {
       // subir archivo
       const upload = await uploadFile(file);
-console.log('UPLOAD RESPONSE:', upload);
       if (!upload.file_url) {
         throw new Error('Upload failed');
       }
@@ -73,7 +72,6 @@ console.log('UPLOAD RESPONSE:', upload);
           data = json?.output || {};
         }
       } catch (err) {
-        console.log('OCR no disponible');
       }
 
       setExtracting(false);

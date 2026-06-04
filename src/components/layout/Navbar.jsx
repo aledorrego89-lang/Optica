@@ -38,7 +38,7 @@ export default function Navbar({ cartCount = 0 }) {
               <Eye className="w-5 h-5 text-primary" />
             </div>
             <span className="font-heading font-semibold text-primary text-lg tracking-tight">
-              OCULAR<span className="text-white">.</span>
+              Optica Blanco<span className="text-white">.</span>
             </span>
           </Link>
 

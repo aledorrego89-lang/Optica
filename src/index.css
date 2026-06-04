@@ -27,25 +27,32 @@
     --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
 
+
+    /* --primary: 202 76% 44%;
+--accent: 202 76% 44%; */
+--ring: 202 76% 44%;
+--primary: 262 83% 58%;
+--accent: 262 83% 58%;
+
     --background: 210 20% 94%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 132 76% 50%;
+    /* --primary: 132 76% 50%; */
     --primary-foreground: 222 47% 11%;
     --secondary: 214 32% 91%;
     --secondary-foreground: 222 47% 11%;
     --muted: 210 20% 96%;
     --muted-foreground: 215 16% 47%;
-    --accent: 168 76% 50%;
+    /* --accent: 168 76% 50%; */
     --accent-foreground: 222 47% 11%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 168 76% 50%;
+    /* --ring: 168 76% 50%; */
     --chart-1: 168 76% 50%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -63,25 +70,32 @@
   }
 
   .dark {
+
+    /* --primary: 202 76% 44%;
+--accent: 202 76% 44%; */
+--ring: 202 76% 44%;
+--primary: 262 83% 58%;
+--accent: 262 83% 58%;
+
     --background: 222 47% 6%;
     --foreground: 210 20% 98%;
     --card: 222 47% 8%;
     --card-foreground: 210 20% 98%;
     --popover: 222 47% 8%;
     --popover-foreground: 210 20% 98%;
-    --primary: 168 76% 50%;
+    /* --primary: 168 76% 50%; */
     --primary-foreground: 222 47% 11%;
     --secondary: 222 30% 16%;
     --secondary-foreground: 210 20% 98%;
     --muted: 222 30% 16%;
     --muted-foreground: 215 16% 57%;
-    --accent: 168 76% 50%;
+    /* --accent: 168 76% 50%; */
     --accent-foreground: 222 47% 11%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 222 30% 16%;
     --input: 222 30% 16%;
-    --ring: 168 76% 50%;
+    /* --ring: 168 76% 50%; */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;

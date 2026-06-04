@@ -47,7 +47,6 @@ useEffect(() => {
       prev === images.length - 1 ? 0 : prev + 1
     );
   }, 4000);
-console.log("PRODUCT:", product);
   return () => clearInterval(interval);
 }, [images]);
 

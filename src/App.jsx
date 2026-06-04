@@ -15,7 +15,7 @@ import Cart from '@/pages/Cart';
 import Checkout from '@/pages/Checkout';
 import Admin from '@/pages/Admin';
 import AdminOrders from '@/pages/AdminOrders';
-
+import TryOnLive from '@/pages/TryOnLive';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -47,6 +47,8 @@ const AuthenticatedApp = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/orders" element={<AdminOrders />} />
+        <Route path="/tryon-live" element={<TryOnLive />}
+        />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

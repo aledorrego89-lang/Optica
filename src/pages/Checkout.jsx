@@ -13,15 +13,15 @@ const OPTICO_EMAIL = 'aledorrego89@gmail.com';
 /* =========================
    API PHP ORDER
 ========================= */
-const createOrder = async (orderData) => {
-  const res = await fetch('/api/orders.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(orderData),
-  });
+// const createOrder = async (orderData) => {
+//   const res = await fetch('/api/orders.php', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(orderData),
+//   });
 
-  return res.json();
-};
+//   return res.json();
+// };
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -47,6 +47,55 @@ export default function Checkout() {
     setCart(c);
   }, [navigate]);
 
+
+  useEffect(() => {
+
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const status =
+    params.get('status');
+
+  const paymentId =
+    params.get('payment_id');
+
+  if (
+    status === 'success' &&
+    paymentId
+  ) {
+
+    fetch('/api/confirm-payment.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        payment_id: paymentId,
+      }),
+    })
+      .then(r => r.json())
+      .then(() => {
+        clearCart();
+        setStep(4);
+      });
+
+    return;
+  }
+
+  if (status === 'failure') {
+    setStep(5);
+    return;
+  }
+
+  if (status === 'pending') {
+    setStep(6);
+    return;
+  }
+
+}, []);
+
+
   const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
 
   const canProceedStep1 = !!prescription?.file_url;
@@ -56,58 +105,40 @@ export default function Checkout() {
   /* =========================
      SUBMIT ORDER
   ========================= */
-  const handleSubmit = async () => {
-    setSubmitting(true);
+const handleSubmit = async () => {
+  setSubmitting(true);
 
-    try {
-      const orderData = {
-        customer,
+  try {
+    const res = await fetch('/api/create-payment.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         cart,
-        total,
-        prescriptionUrl: prescription?.file_url || null,
-      };
+        customer,
+        prescription,
+      }),
+    });
 
-      console.log('CART ENVIADO:', cart);
-      // guardar orden en PHP
-const orderRes = await createOrder(orderData);
+    const data = await res.json();
 
-console.log('ORDER RESPONSE:', orderRes);
+console.log("STATUS MP RESPONSE:", res.status);
+console.log("MP RESPONSE FULL:", data);
 
-if (orderRes.success === false) {
-  throw new Error(orderRes.error || 'Error guardando pedido');
-}
+  
 
-
-      // opcional email backend
-const emailRes = await fetch('/api/send-email.php', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    customer,
-    cart,
-    total,
-    prescriptionUrl: prescription?.file_url || null,
-    opticoEmail: OPTICO_EMAIL,
-  }),
-});
-
-const emailData = await emailRes.json();
-
-console.log('EMAIL RESPONSE:', emailData);
-
-if (!emailData.success) {
-  throw new Error('Error enviando emails');
-}
-
-      clearCart();
-      setStep(4);
-    } catch (err) {
-      console.error(err);
-      alert('Error al procesar el pedido');
-    } finally {
-      setSubmitting(false);
+    if (!data.init_point) {
+      throw new Error(data.error || 'No init_point');
     }
-  };
+
+    window.location.href = data.init_point;
+
+  } catch (err) {
+    console.error(err);
+    alert('Error iniciando Mercado Pago');
+  }
+
+  setSubmitting(false);
+};
 
   /* =========================
      SUCCESS SCREEN
@@ -137,6 +168,39 @@ if (!emailData.success) {
       </div>
     );
   }
+
+
+  if (step === 5) {
+  return (
+    <div className="pt-20 min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold mb-4">
+          Pago rechazado
+        </h1>
+
+        <Button onClick={() => navigate('/cart')}>
+          Volver al carrito
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+if (step === 6) {
+  return (
+    <div className="pt-20 min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold mb-4">
+          Pago pendiente
+        </h1>
+
+        <Button onClick={() => navigate('/')}>
+          Volver al inicio
+        </Button>
+      </div>
+    </div>
+  );
+}
 
   /* =========================
      UI

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { MessageCircle } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import HeroSection from '@/components/home/HeroSection';
 import FeaturesSection from '@/components/home/FeaturesSection';
@@ -14,6 +15,16 @@ export const getProducts = async () => {
 };
 
 export default function Home() {
+  const [showBubble, setShowBubble] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowBubble(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const { data: products, isLoading, error } = useQuery({
     queryKey: ['products-featured'],
     queryFn: getProducts,
@@ -26,9 +37,75 @@ export default function Home() {
 
   return (
     <div>
-      <HeroSection heroImage={HERO_IMAGE} />
+      <HeroSection products={products} />
       <FeaturesSection />
-      <FeaturedProducts products={products} isLoading={isLoading} />
+      <FeaturedProducts
+        products={products}
+        isLoading={isLoading}
+      />
+
+      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50">
+        {showBubble && (
+          <div
+            className="
+              absolute
+              bottom-20
+              right-0
+              bg-white
+              text-gray-800
+              px-4
+              py-3
+              rounded-xl
+              shadow-xl
+              text-sm
+              font-medium
+              w-56
+            "
+          >
+            ¿Tenés alguna duda?
+            <br />
+            Contactanos por WhatsApp.
+
+            <div
+              className="
+                absolute
+                -bottom-2
+                right-6
+                w-4
+                h-4
+                bg-white
+                rotate-45
+              "
+            />
+          </div>
+        )}
+
+        <a
+          href="https://wa.me/5492914353276?text=Hola,%20quisiera%20realizar%20una%20consulta."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="
+            flex
+            items-center
+            justify-center
+            w-14
+            h-14
+            md:w-16
+            md:h-16
+            rounded-full
+            bg-green-500
+            text-white
+            shadow-xl
+            hover:bg-green-600
+            hover:scale-110
+            transition-all
+            duration-300
+          "
+          aria-label="Contactar por WhatsApp"
+        >
+          <MessageCircle className="w-7 h-7 md:w-8 md:h-8" />
+        </a>
+      </div>
     </div>
   );
 }

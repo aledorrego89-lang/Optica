@@ -37,8 +37,6 @@ export default function TryOn() {
     queryFn: async () => {
       const data = await getProducts();
 
-      console.log("🔥 RAW API RESPONSE:", data);
-      console.log("📦 TYPE:", typeof data, Array.isArray(data));
 
       return data;
     },
@@ -75,11 +73,6 @@ export default function TryOn() {
     null;
 
   useEffect(() => {
-    console.log("🔥 selectedProduct RAW:");
-    console.log(selectedProduct);
-
-    console.log("🧠 JSON:");
-    console.log(JSON.stringify(selectedProduct, null, 2));
   }, [selectedProduct]);
 
   return (
