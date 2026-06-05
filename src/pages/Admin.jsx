@@ -147,6 +147,13 @@ export default function Admin() {
   const [galleryImages, setGalleryImages] =
     useState([]);
 
+    const [orderSearch, setOrderSearch] = useState('');
+
+const [orderStatusFilter, setOrderStatusFilter] = useState('all');
+
+const lastOrderIdRef = React.useRef(null);
+
+
   /* ========================= LOGIN ========================= */
 
   useEffect(() => {
@@ -166,11 +173,14 @@ export default function Admin() {
     enabled: adminLoggedIn === true,
   });
 
-  const ordersQuery = useQuery({
-    queryKey: ['admin-orders'],
-    queryFn: getOrders,
-    enabled: adminLoggedIn === true,
-  });
+const ordersQuery = useQuery({
+  queryKey: ['admin-orders'],
+  queryFn: getOrders,
+  enabled: adminLoggedIn === true,
+
+  refetchInterval: 5000, // cada 5 segundos
+  refetchOnWindowFocus: true, // refresca al volver a la pestaña
+});
 
   /* ========================= MUTATIONS ========================= */
 
@@ -366,12 +376,49 @@ const deleteMutation = useMutation({
   const products =
     productsQuery.data ?? [];
 
-  const orders = [...(ordersQuery.data ?? [])].reverse();
+const orders = [...(ordersQuery.data ?? [])].reverse();
 
-  const visibleOrders =
-    showAllOrders
-      ? orders
-      : orders.slice(0, 4);
+    const statusCounts = orders.reduce(
+  (acc, o) => {
+    const status = o.status;
+
+    acc.all += 1;
+
+    if (status === 'Pendiente') acc.Pendiente += 1;
+    if (status === 'En proceso') acc['En proceso'] += 1;
+    if (status === 'Terminados') acc.Terminados += 1;
+    if (status === 'Entregados') acc.Entregados += 1;
+
+    return acc;
+  },
+  {
+    all: 0,
+    Pendiente: 0,
+    'En proceso': 0,
+    Terminados: 0,
+    Entregados: 0,
+  }
+);
+
+const filteredOrders = orders.filter((o) => {
+  const q = orderSearch.toLowerCase();
+
+  const matchesSearch =
+    o.customer?.name?.toLowerCase().includes(q) ||
+    o.customer?.email?.toLowerCase().includes(q) ||
+    String(o.id).includes(q) ||
+    String(o.status).toLowerCase().includes(q);
+
+  const matchesStatus =
+    orderStatusFilter === 'all' ||
+    o.status === orderStatusFilter;
+
+  return matchesSearch && matchesStatus;
+});
+
+const visibleOrders = showAllOrders
+  ? filteredOrders
+  : filteredOrders.slice(0, 4);
 
   const isLoading =
     productsQuery.isLoading;
@@ -504,6 +551,10 @@ const deleteMutation = useMutation({
         prev === 0 ? images.length - 1 : prev - 1
       );
     };
+
+
+
+
 
     return (
       <div className="relative w-full h-40">
@@ -867,7 +918,78 @@ const deleteMutation = useMutation({
 
             {showAllOrders && (
 
+
               <div className="space-y-4 mt-6">
+<div className="mt-4 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+
+  {/* SEARCH */}
+  <Input
+    placeholder="Buscar por nombre, email, estado o ID..."
+    value={orderSearch}
+    onChange={(e) => setOrderSearch(e.target.value)}
+    className="max-w-md"
+  />
+
+  {/* FILTER BUTTONS */}
+<div className="flex flex-wrap gap-1.5">
+
+  <button
+    onClick={() => setOrderStatusFilter('all')}
+    className={`px-2.5 py-1 rounded-lg text-xs border transition ${
+      orderStatusFilter === 'all'
+        ? 'bg-black text-white'
+        : 'bg-transparent hover:bg-gray-100'
+    }`}
+  >
+    Todos ({statusCounts.all})
+  </button>
+
+  <button
+    onClick={() => setOrderStatusFilter('Pendiente')}
+    className={`px-2.5 py-1 rounded-lg text-xs transition ${
+      orderStatusFilter === 'Pendiente'
+        ? 'bg-yellow-500 text-white'
+        : 'bg-yellow-500/20 hover:bg-yellow-500/30'
+    }`}
+  >
+    Pendientes ({statusCounts.Pendiente})
+  </button>
+
+  <button
+    onClick={() => setOrderStatusFilter('En proceso')}
+    className={`px-2.5 py-1 rounded-lg text-xs transition ${
+      orderStatusFilter === 'En proceso'
+        ? 'bg-blue-500 text-white'
+        : 'bg-blue-500/20 hover:bg-blue-500/30'
+    }`}
+  >
+    En proceso ({statusCounts['En proceso']})
+  </button>
+
+  <button
+    onClick={() => setOrderStatusFilter('Terminados')}
+    className={`px-2.5 py-1 rounded-lg text-xs transition ${
+      orderStatusFilter === 'Terminados'
+        ? 'bg-green-500 text-white'
+        : 'bg-green-500/20 hover:bg-green-500/30'
+    }`}
+  >
+    Terminados ({statusCounts.Terminados})
+  </button>
+
+  <button
+    onClick={() => setOrderStatusFilter('Entregados')}
+    className={`px-2.5 py-1 rounded-lg text-xs transition ${
+      orderStatusFilter === 'Entregados'
+        ? 'bg-purple-500 text-white'
+        : 'bg-purple-500/20 hover:bg-purple-500/30'
+    }`}
+  >
+    Entregados ({statusCounts.Entregados})
+  </button>
+
+</div>
+</div>
 
                 {orders.length === 0 ? (
 
@@ -877,7 +999,7 @@ const deleteMutation = useMutation({
 
                 ) : (
 
-                  orders.map((o) => {
+                  visibleOrders.map((o) => {
 
                     const isOpen =
                       expandedId === o.id;

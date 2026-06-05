@@ -22,7 +22,7 @@
         ],
         "total": 1,
         "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a22cee044105.jpg",
-        "status": "Pendiente",
+        "status": "Entregados",
         "created_at": "2026-06-05T13:28:58+00:00"
     },
     {
@@ -48,7 +48,115 @@
         ],
         "total": 1,
         "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a22d037977f9.jpg",
-        "status": "Pendiente",
+        "status": "Terminados",
         "created_at": "2026-06-05T13:34:03+00:00"
+    },
+    {
+        "id": "6a235911ea267",
+        "payment_id": "162739450452",
+        "payment_status": "approved",
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Rio Uruguay 52"
+        },
+        "cart": [
+            {
+                "id": "rb-aviator-classic",
+                "name": "Aviator Classic",
+                "price": 2,
+                "image_url": "\/uploads\/products\/img_6a1ea2a53c6d9.png",
+                "overlay_url": "\/uploads\/products\/img_6a1ea2a53c6d9.png",
+                "brand": "Ray-Ban",
+                "category": "optical",
+                "quantity": 1
+            }
+        ],
+        "total": 2,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a2358fa821be.jpg",
+        "status": "En proceso",
+        "created_at": "2026-06-05T23:17:37+00:00"
+    },
+    {
+        "id": "6a23598905506",
+        "payment_id": "161940126435",
+        "payment_status": "approved",
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Rio Uruguay 52"
+        },
+        "cart": [
+            {
+                "id": "rb-wayfarer-black",
+                "name": "Wayfarer Black",
+                "price": 1,
+                "image_url": "\/uploads\/products\/img_6a1ea7549cf92.png",
+                "overlay_url": "\/uploads\/products\/img_6a1ea7549cf92.png",
+                "brand": "Ray-Ban",
+                "category": "optical",
+                "quantity": 1
+            }
+        ],
+        "total": 1,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a23597170f53.jpg",
+        "status": "En proceso",
+        "created_at": "2026-06-05T23:19:37+00:00"
+    },
+    {
+        "id": "6a235a49ed7b3",
+        "payment_id": "161940700785",
+        "payment_status": "approved",
+        "customer": {
+            "name": "Alejandro Atala",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Rio Uruguay 52"
+        },
+        "cart": [
+            {
+                "id": "rb-wayfarer-black",
+                "name": "Wayfarer Black",
+                "price": 1,
+                "image_url": "\/uploads\/products\/img_6a1ea7549cf92.png",
+                "overlay_url": "\/uploads\/products\/img_6a1ea7549cf92.png",
+                "brand": "Ray-Ban",
+                "category": "optical",
+                "quantity": 1
+            }
+        ],
+        "total": 1,
+        "prescriptionUrl": "\/uploads\/prescriptions\/prescription_6a235a319cc11.jpg",
+        "status": "Pendiente",
+        "created_at": "2026-06-05T23:22:49+00:00"
+    },
+    {
+        "id": "6a23616d01da8",
+        "payment_id": "162745892000",
+        "payment_status": "approved",
+        "customer": {
+            "name": "aaaaaaaaaaaaaaaa",
+            "email": "aledorrego89@gmail.com",
+            "phone": "+542921401356",
+            "address": "Rio Uruguay 52"
+        },
+        "cart": [
+            {
+                "id": "rb-wayfarer-black",
+                "name": "Wayfarer Black",
+                "price": 1,
+                "image_url": "\/uploads\/products\/img_6a1ea7549cf92.png",
+                "overlay_url": "\/uploads\/products\/img_6a1ea7549cf92.png",
+                "brand": "Ray-Ban",
+                "category": "optical",
+                "quantity": 2
+            }
+        ],
+        "total": 1,
+        "prescriptionUrl": "",
+        "status": "Pendiente",
+        "created_at": "2026-06-05T23:53:17+00:00"
     }
 ]

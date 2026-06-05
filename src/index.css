@@ -12,7 +12,7 @@
 
 [data-sonner-toast][data-type="success"],
 [data-sonner-toast][data-rich-colors="true"][data-type="success"] {
-  background: #1b86c4 !important;
+  background: #62fa74 !important;
   color: white;
 }
 
@@ -28,11 +28,11 @@
     --font-body: 'Inter', sans-serif;
 
 
-    /* --primary: 202 76% 44%;
---accent: 202 76% 44%; */
+     --primary: 202 76% 44%;
+--accent: 202 76% 44%; 
 --ring: 202 76% 44%;
---primary: 262 83% 58%;
---accent: 262 83% 58%;
+/* --primary: 262 83% 58%;
+--accent: 262 83% 58%; */
 
     --background: 210 20% 94%;
     --foreground: 222 47% 11%;
@@ -71,11 +71,11 @@
 
   .dark {
 
-    /* --primary: 202 76% 44%;
---accent: 202 76% 44%; */
+     --primary: 202 76% 44%;
+--accent: 202 76% 44%; 
 --ring: 202 76% 44%;
---primary: 262 83% 58%;
---accent: 262 83% 58%;
+/* --primary: 262 83% 58%;
+--accent: 262 83% 58%; */
 
     --background: 222 47% 6%;
     --foreground: 210 20% 98%;

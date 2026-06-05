@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Eye, ShoppingBag, Menu, X } from 'lucide-react';
+import { Eye, ShoppingCart, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -60,7 +60,7 @@ export default function Navbar({ cartCount = 0 }) {
 
           <div className="flex items-center gap-4">
             <Link to="/cart" className="relative group">
-              <ShoppingBag className="w-8 h-8 text-foreground group-hover:text-primary transition-colors" />
+              <ShoppingCart className="w-8 h-8 text-foreground group-hover:text-primary transition-colors" />
 
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 w-5 h-5 bg-primary text-primary-foreground text-xs font-bold rounded-full flex items-center justify-center">

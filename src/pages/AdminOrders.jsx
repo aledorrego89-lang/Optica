@@ -50,11 +50,7 @@ const toggle = (id) => {
 
     queryClient.invalidateQueries(['orders']);
   };
-console.log("test",{
-  isLoading,
-  error,
-  orders
-});
+
   return (
     <div className="pt-20 max-w-4xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">

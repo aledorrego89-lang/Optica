@@ -14,6 +14,16 @@ export default function PrescriptionUpload({ onPrescriptionReady }) {
   const [prescriptionData, setPrescriptionData] = useState(null);
   const [cameraActive, setCameraActive] = useState(false);
 
+
+  const handleSkipPrescription = () => {
+  onPrescriptionReady({
+    file_url: null,
+    data: {},
+    skipped: true,
+  });
+};
+
+
   /* =========================
      UPLOAD FILE
   ========================= */
@@ -234,7 +244,19 @@ export default function PrescriptionUpload({ onPrescriptionReady }) {
               <Camera className="w-4 h-4 mr-2" />
               Usar cámara
             </Button>
+<div className="mt-4 border-t pt-4">
+  <Button
+    variant="outline"
+    onClick={handleSkipPrescription}
+    className="w-full"
+  >
+    Continuar sin receta
+  </Button>
 
+  <p className="text-xs text-muted-foreground text-center mt-2">
+    Podés continuar sin subir una receta
+  </p>
+</div>
           </motion.div>
 
         ) : (

@@ -264,7 +264,20 @@ if (step === 6) {
         {/* STEP CONTENT */}
         {step === 1 && (
           <>
-            <PrescriptionUpload onPrescriptionReady={setPrescription} />
+            <PrescriptionUpload
+  onPrescriptionReady={(data) => {
+    setPrescription(data);
+
+    // 👇 SI APRETÓ "SIN RECETA"
+    if (data?.skipped) {
+      setStep(2);
+      return;
+    }
+
+    // 👇 SI SUBIÓ RECETA NORMALMENTE
+    setStep(2);
+  }}
+/>
 
             <Button
               className="mt-6"
