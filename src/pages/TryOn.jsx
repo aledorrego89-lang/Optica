@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ShoppingBag, RotateCcw } from 'lucide-react';
+import { ShoppingBag, RotateCcw, Camera } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import PhotoUpload from '@/components/tryon/PhotoUpload';
@@ -9,6 +9,7 @@ import GlassesOverlay from '@/components/tryon/GlassesOverlay';
 import ProductSelector from '@/components/tryon/ProductSelector';
 import { addToCart } from '@/lib/cartUtils';
 import FaceGuide from '@/components/tryon/FaceGuide';
+
 /* =========================
    API FUNCTION (CORRECTO)
 ========================= */
@@ -119,7 +120,8 @@ export default function TryOn() {
                   }
                 />
 
-                <div className="flex gap-3 mt-6 justify-center">
+                <div className="flex flex-wrap gap-3 mt-6 justify-center">
+
                   <Button
                     variant="outline"
                     onClick={() => {
@@ -132,6 +134,21 @@ export default function TryOn() {
                     Cambiar Foto
                   </Button>
 
+                  <Button
+                    variant="outline"
+                    className="rounded-full"
+                    onClick={() => {
+                      const url = selectedProduct
+                        ? `/tryon-live?productId=${selectedProduct.id}`
+                        : '/tryon-live';
+
+                      window.location.href = url;
+                    }}
+                  >
+                    <Camera className="w-4 h-4 mr-2" />
+                    Cámara en Vivo
+                  </Button>
+
                   {selectedProduct && (
                     <Button
                       onClick={handleAddToCart}
@@ -139,13 +156,14 @@ export default function TryOn() {
                       className="rounded-full"
                     >
                       <ShoppingBag className="w-4 h-4 mr-2" />
-
                       {selectedProduct.in_stock
                         ? 'Agregar al Carrito'
                         : 'Sin stock'}
                     </Button>
                   )}
+
                 </div>
+
 
                 {/* PRODUCT INFO */}
                 {selectedProduct && (

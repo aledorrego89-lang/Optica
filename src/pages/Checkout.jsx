@@ -28,6 +28,15 @@ export default function Checkout() {
 
   const [cart, setCart] = useState([]);
   const [step, setStep] = useState(1);
+const params = new URLSearchParams(
+  window.location.search
+);
+
+const [checkingPayment, setCheckingPayment] =
+  useState(
+    params.get('status') === 'success' &&
+    params.get('payment_id')
+  );
   const [prescription, setPrescription] = useState(null);
   const [customer, setCustomer] = useState({
     name: '',
@@ -38,33 +47,44 @@ export default function Checkout() {
 
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    const c = getCart();
-    if (!c || c.length === 0) {
-      navigate('/cart');
-      return;
-    }
-    setCart(c);
-  }, [navigate]);
-
-
-  useEffect(() => {
+useEffect(() => {
 
   const params = new URLSearchParams(
     window.location.search
   );
 
-  const status =
-    params.get('status');
+   console.log(
+    'MP PARAMS',
+    Object.fromEntries(params.entries()))
 
-  const paymentId =
+
+  const isReturningFromMP =
+    params.get('status') === 'success' &&
     params.get('payment_id');
 
-  if (
-    status === 'success' &&
-    paymentId
-  ) {
+  if (isReturningFromMP) {
+    return;
+  }
 
+  const c = getCart();
+
+  if (!c || c.length === 0) {
+    navigate('/cart');
+    return;
+  }
+
+  setCart(c);
+
+}, [navigate]);
+
+
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+
+  const status = params.get('status');
+  const paymentId = params.get('payment_id');
+
+  if (status === 'success' && paymentId) {
     fetch('/api/confirm-payment.php', {
       method: 'POST',
       headers: {
@@ -78,6 +98,9 @@ export default function Checkout() {
       .then(() => {
         clearCart();
         setStep(4);
+      })
+      .finally(() => {
+        setCheckingPayment(false);
       });
 
     return;
@@ -85,14 +108,13 @@ export default function Checkout() {
 
   if (status === 'failure') {
     setStep(5);
-    return;
   }
 
   if (status === 'pending') {
     setStep(6);
-    return;
   }
 
+  setCheckingPayment(false);
 }, []);
 
 
@@ -139,6 +161,19 @@ console.log("MP RESPONSE FULL:", data);
 
   setSubmitting(false);
 };
+
+
+if (checkingPayment) {
+  return (
+    <div className="pt-20 min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
+        <p>Verificando pago...</p>
+      </div>
+    </div>
+  );
+}
+
 
   /* =========================
      SUCCESS SCREEN

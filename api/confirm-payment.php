@@ -20,8 +20,8 @@ if (!$paymentId) {
     exit;
 }
 
-$accessToken = 'APP_USR-209050649533627-060308-c2fd2b01c315d7216cc602cbb1a7006c-54942150';
-
+// $accessToken = 'APP_USR-209050649533627-060308-c2fd2b01c315d7216cc602cbb1a7006c-54942150';
+$accessToken = 'APP_USR-5984370179459066-060308-8b27586fbb41283f99ef9062fcb08fd7-1484050043';
 /* =========================
    CONSULTAR PAGO
 ========================= */
@@ -74,10 +74,12 @@ if (
 
 $metadata = $payment['metadata'] ?? [];
 
-$customer = json_decode(
-    $metadata['customer'] ?? '{}',
-    true
-);
+$customer = [
+    'name' => $metadata['customer_name'] ?? '',
+    'email' => $metadata['customer_email'] ?? '',
+    'phone' => $metadata['customer_phone'] ?? '',
+    'address' => $metadata['shipping_address'] ?? '',
+];
 
 $cart = json_decode(
     $metadata['cart'] ?? '[]',
@@ -136,6 +138,8 @@ $newOrder = [
 
     'payment_id' => $paymentId,
 
+    'payment_status' => $payment['status'], // <-- agregar
+
     'customer' => $customer,
 
     'cart' => $cart,
@@ -144,7 +148,7 @@ $newOrder = [
 
     'prescriptionUrl' => $prescriptionUrl,
 
-    'status' => 'Pagado',
+    'status' => 'Pendiente',
 
     'created_at' => date('c')
 ];
@@ -182,7 +186,7 @@ $context = stream_context_create([
 ]);
 
 @file_get_contents(
-    'https://TU_DOMINIO/api/send-email.php',
+    'https://raspberrypi-5.tail03b1df.ts.net/api/send-email.php',
     false,
     $context
 );

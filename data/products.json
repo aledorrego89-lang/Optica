@@ -49,12 +49,14 @@
         "category": "blue_light",
         "color": "Transparente",
         "image_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/bf5428814_generated_image.png",
-        "overlay_url": "https:\/\/media.base44.com\/images\/public\/6a02795ba3c031678ec123fc\/bf5428814_generated_image.png",
+        "overlay_url": "\/uploads\/products\/img_6a2179865996f.png",
         "in_stock": true,
         "description": "Armaz\u00f3n liviano y moderno para uso diario.",
         "created_at": "2026-05-14T00:00:02+00:00",
         "gallery": [],
-        "images": []
+        "images": [
+            "\/uploads\/products\/img_6a217980a5eb6.png"
+        ]
     },
     {
         "id": "ocular-blue-light-pro",
@@ -64,9 +66,13 @@
         "category": "sunglasses",
         "color": "Negro Mate",
         "image_url": "https:\/\/tse3.mm.bing.net\/th\/id\/OIP.JXW5hmzc2Z1XOLpwfogwWwHaHa?w=1060&h=1060&rs=1&pid=ImgDetMain&o=7&rm=3",
-        "overlay_url": "https:\/\/tse3.mm.bing.net\/th\/id\/OIP.JXW5hmzc2Z1XOLpwfogwWwHaHa?w=1060&h=1060&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "overlay_url": "\/uploads\/products\/img_6a217992f114f.png",
         "in_stock": true,
         "description": "Protecci\u00f3n contra luz azul para pantallas.",
-        "created_at": "2026-05-14T00:00:03+00:00"
+        "created_at": "2026-05-14T00:00:03+00:00",
+        "gallery": [],
+        "images": [
+            "\/uploads\/products\/img_6a21798e6e831.png"
+        ]
     }
 ]

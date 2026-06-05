@@ -8,19 +8,30 @@ export default function AppLayout() {
   const location = useLocation();
   const isAdmin = location.pathname === '/admin';
 
-  useEffect(() => {
-    const updateCart = () => {
-      const cart = JSON.parse(localStorage.getItem('ocular_cart') || '[]');
-      setCartCount(cart.length);
-    };
-    updateCart();
-    window.addEventListener('storage', updateCart);
-    window.addEventListener('cartUpdated', updateCart);
-    return () => {
-      window.removeEventListener('storage', updateCart);
-      window.removeEventListener('cartUpdated', updateCart);
-    };
-  }, []);
+useEffect(() => {
+  const updateCart = () => {
+    const cart = JSON.parse(
+      localStorage.getItem('ocular_cart') || '[]'
+    );
+
+    const totalItems = cart.reduce(
+      (sum, item) => sum + (item.quantity || 1),
+      0
+    );
+
+    setCartCount(totalItems);
+  };
+
+  updateCart();
+
+  window.addEventListener('storage', updateCart);
+  window.addEventListener('cartUpdated', updateCart);
+
+  return () => {
+    window.removeEventListener('storage', updateCart);
+    window.removeEventListener('cartUpdated', updateCart);
+  };
+}, []);
 
   return (
     <div className="min-h-screen flex flex-col">

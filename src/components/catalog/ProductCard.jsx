@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Eye } from 'lucide-react';
+import { Eye, ShoppingCart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { addToCart } from '@/lib/cartUtils';
@@ -54,7 +54,7 @@ useEffect(() => {
   return (
     <Link to={`/try-on?productId=${product.id}`} className="group block">
       <div className="relative rounded-2xl overflow-hidden bg-card border border-border hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5">
-<div className="aspect-square overflow-hidden bg-muted/50 relative">
+<div className="aspect-[1/1] overflow-hidden bg-muted/50 relative">
 
   {images.length > 0 ? (
 <div className="relative w-full h-full">
@@ -92,26 +92,17 @@ useEffect(() => {
   )}
 
   <div className="absolute top-4 left-4">
-    <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm text-xs font-medium">
+    <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm text-[10px] font-medium px-2 py-0">
       {categoryLabels[product.category] || product.category}
     </Badge>
   </div>
 
-  <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-    <Button
-      size="sm"
-      className="rounded-full bg-primary text-primary-foreground shadow-lg"
-      onClick={handleAdd}
-    >
-      Agregar al carrito
-    </Button>
-  </div>
 
 </div>
 
-        <div className="p-6">
+        <div className="p-3">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-muted-foreground uppercase tracking-wider">
+         <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
               {product.brand || 'OCULAR'}
             </span>
             {product.material && (
@@ -120,12 +111,35 @@ useEffect(() => {
               </span>
             )}
           </div>
-          <h3 className="font-heading font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+          <h3 className="font-heading font-semibold text-sm mb-1 line-clamp-1 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
-          <p className="font-heading text-2xl font-bold text-primary">
-            ${product.price?.toLocaleString()}
-          </p>
+          {/* <p className="font-heading text-2xl font-bold text-primary"> */}
+          <div className="flex items-center justify-between mt-2">
+  <p className="font-heading text-lg font-bold text-primary">
+    ${product.price?.toLocaleString()}
+  </p>
+
+  <button
+    onClick={handleAdd}
+    className="
+      w-9
+      h-9
+      rounded-full
+      bg-primary/10
+      hover:bg-primary
+      text-primary
+      hover:text-white
+      flex
+      items-center
+      justify-center
+      transition-all
+      duration-200
+    "
+  >
+    <ShoppingCart className="w-4 h-4" />
+  </button>
+</div>
         </div>
       </div>
     </Link>

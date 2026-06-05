@@ -71,24 +71,20 @@ const filtered = products
   ========================= */
 
   return (
-    <div className="pt-20 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+   <div className="pt-4 min-h-screen">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4">
 
         {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <span className="text-xs font-medium text-primary uppercase tracking-widest">
-            Colección
-          </span>
-
-          <h1 className="font-heading text-4xl md:text-6xl font-bold mt-4 mb-8">
-            Nuestra selección
-          </h1>
+<h2 className="text-2xl md:text-3xl font-bold mb-6">
+  Explorá nuestros modelos
+</h2>
 
           {/* FILTERS */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-6">
 
             <Tabs value={activeCategory} onValueChange={setActiveCategory}>
               <TabsList className="bg-muted/50">
@@ -115,8 +111,8 @@ const filtered = products
 
         {/* CONTENT */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
+<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
               <div
                 key={i}
                 className="h-96 rounded-2xl bg-muted animate-pulse"
@@ -131,7 +127,8 @@ const filtered = products
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        //  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {filtered.map((product, i) => (
               <motion.div
                 key={product.id}

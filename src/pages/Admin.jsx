@@ -118,6 +118,7 @@ const defaultForm = () => ({
 
 /* ========================= COMPONENT ========================= */
 
+
 export default function Admin() {
 
   const queryClient = useQueryClient();
@@ -905,10 +906,20 @@ const deleteMutation = useMutation({
 
                             <div>
 
-                              <p className="font-bold text-lg">
-                                {o.customer?.name ||
-                                  'Sin nombre'}
-                              </p>
+<div className="flex items-center gap-2">
+  <p className="font-bold text-lg">
+    {o.customer?.name || 'Sin nombre'}
+  </p>
+
+  {String(o.payment_status).toLowerCase() === 'approved' && (
+    <span
+      className="text-green-600 text-xl"
+      title="Pago aprobado"
+    >
+      ✅ Pago aprobado
+    </span>
+  )}
+</div>
 
                               <p className="text-sm text-muted-foreground">
                                 {o.customer?.email ||

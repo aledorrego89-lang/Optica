@@ -50,7 +50,11 @@ const toggle = (id) => {
 
     queryClient.invalidateQueries(['orders']);
   };
-
+console.log("test",{
+  isLoading,
+  error,
+  orders
+});
   return (
     <div className="pt-20 max-w-4xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">
@@ -72,13 +76,27 @@ const toggle = (id) => {
     >
 
       {/* HEADER SIEMPRE VISIBLE */}
-      <div className="flex justify-between items-center">
-        <p className="font-semibold">{o.customer?.name}</p>
+<div className="flex justify-between items-center">
+  <div className="flex items-center gap-2">
+    <p className="font-semibold">
+      {o.customer?.name}
+    </p>
 
-        <span className={`px-2 py-1 text-white text-sm rounded ${statusColors[o.status] || 'bg-gray-400'}`}>
-          {o.status}
-        </span>
-      </div>
+    {o.payment_status === 'approved' && (
+<span className="text-xs bg-red-500 text-white px-2 py-1 rounded">
+  {o.payment_status}
+</span>
+    )}
+  </div>
+
+  <span
+    className={`px-2 py-1 text-white text-sm rounded ${
+      statusColors[o.status] || 'bg-gray-400'
+    }`}
+  >
+    {o.status}
+  </span>
+</div>
 
       <p className="text-sm text-muted-foreground">
         ${o.total}

@@ -14,7 +14,11 @@ export default function CartItemRow({ item, onRemove }) {
 </div>
       <div className="flex-1 min-w-0">
         <p className="text-xs text-muted-foreground uppercase tracking-wider">{item.brand || 'OCULAR'}</p>
-        <p className="font-heading font-semibold truncate">{item.name}</p>
+   <p>
+  <p>
+  {item.name} x {item.quantity || 1}
+</p>
+</p>
         <p className="font-heading text-lg font-bold text-primary">${item.price?.toLocaleString()}</p>
       </div>
       <Button variant="ghost" size="icon" onClick={() => onRemove(item.id)} className="text-muted-foreground hover:text-destructive">

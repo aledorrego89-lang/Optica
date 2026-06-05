@@ -22,7 +22,11 @@ export default function Cart() {
     setCart(updated);
   };
 
-  const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
+const total = cart.reduce(
+  (sum, item) =>
+    sum + ((item.price || 0) * (item.quantity || 1)),
+  0
+);
 
   return (
     <div className="pt-20 min-h-screen">
