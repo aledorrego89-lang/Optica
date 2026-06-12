@@ -10,7 +10,7 @@ const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [processedGlasses, setProcessedGlasses] = useState(null);
   const [processing, setProcessing] = useState(false);
-const [baseOffset] = useState({ x: 2, y: 2 }); //correccion de posicion lentes
+const [baseOffset] = useState({ x: 3, y: 4 }); //correccion de posicion lentes
   // When glasses change, remove the white background
   useEffect(() => {
     if (!glassesImage) {
@@ -99,8 +99,7 @@ const [baseOffset] = useState({ x: 2, y: 2 }); //correccion de posicion lentes
   return (
     <div className="flex flex-col items-center gap-6">
       <div
-        className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden bg-foreground/5 border border-border select-none"
-        style={{
+className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden bg-foreground/5 border-4 border-primary/70 shadow-xl shadow-primary/20 select-none"        style={{
           cursor: dragging ? 'grabbing' : 'default',
           touchAction: 'none',
           WebkitUserSelect: 'none',
@@ -161,8 +160,8 @@ const [baseOffset] = useState({ x: 2, y: 2 }); //correccion de posicion lentes
 
         {/* Reticle guide lines */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-4 right-4 h-px bg-primary/10" />
-          <div className="absolute left-1/2 top-4 bottom-4 w-px bg-primary/10" />
+          <div className="absolute top-1/2 left-4 right-4 h-px bg-primary/20" />
+          <div className="absolute left-1/2 top-4 bottom-4 w-px bg-primary/20" />
         </div>
 
         {processedGlasses && !processing && (

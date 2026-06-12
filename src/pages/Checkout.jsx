@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, Loader2, ArrowLeft, ShieldCheck, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
+import { toast } from 'sonner';
 import PrescriptionUpload from '@/components/checkout/PrescriptionUpload';
 import CustomerForm from '@/components/checkout/CustomerForm';
 import { getCart, clearCart } from '@/lib/cartUtils';
@@ -46,6 +46,12 @@ const [checkingPayment, setCheckingPayment] =
   });
 
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}, [step]);
+
+
 
 useEffect(() => {
 
@@ -217,9 +223,16 @@ const handleTransferOrder = async () => {
 };
 
 
-const copyToClipboard = (text) => {
-  navigator.clipboard.writeText(text);
-  alert(`Copiado: ${text}`);
+const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text);
+
+    toast.success('Copiado al portapapeles', {
+      description: text,
+    });
+  } catch (err) {
+    toast.error('Error al copiar');
+  }
 };
 
 
@@ -493,15 +506,7 @@ if (step === 6) {
 
     
 
-        {/* CART SIDEBAR */}
-        <div className="mt-10 border rounded-xl p-4">
-          {cart.map((item) => (
-            <div key={item.id} className="flex justify-between py-2">
-              <span>{item.name}</span>
-              <span>${item.price}</span>
-            </div>
-          ))}
-        </div>
+
 
       </div>
     </div>
