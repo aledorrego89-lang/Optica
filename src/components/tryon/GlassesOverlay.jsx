@@ -4,13 +4,13 @@ import { Slider } from '@/components/ui/slider';
 import { removeWhiteBackground } from '@/lib/removeBackground';
 
 export default function GlassesOverlay({ facePhoto, glassesImage }) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+const [position, setPosition] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
   const [dragging, setDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [processedGlasses, setProcessedGlasses] = useState(null);
   const [processing, setProcessing] = useState(false);
-
+const [baseOffset] = useState({ x: 2, y: 2 }); //correccion de posicion lentes
   // When glasses change, remove the white background
   useEffect(() => {
     if (!glassesImage) {
@@ -140,7 +140,11 @@ export default function GlassesOverlay({ facePhoto, glassesImage }) {
               draggable={false}
               className="pointer-events-auto"
               style={{
-                transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+              transform: `
+  translate(${position.x + baseOffset.x}px,
+            ${position.y + baseOffset.y}px)
+  scale(${scale})
+`,
                 width: '72%',
                 maxWidth: '320px',
                 userSelect: 'none',

@@ -81,11 +81,15 @@ export default function TryOnLive() {
 
 {selectedProduct ? (
   <>
-    <LiveTryOn
+    {/* <LiveTryOn
       glassesImage={
         selectedProduct.overlay_url
       }
-    />
+    /> */}
+    <LiveTryOn
+  key={selectedProduct?.id}
+  glassesImage={selectedProduct.overlay_url}
+/>
 
     <div className="mt-4 space-y-4">
       <div className="p-4 rounded-xl border bg-card">

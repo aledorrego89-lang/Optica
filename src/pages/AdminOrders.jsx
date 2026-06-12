@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const getOrders = async () => {
   const res = await fetch('/api/orders.php');
+  
   return res.json();
 };
 
@@ -61,7 +62,13 @@ const toggle = (id) => {
         <p>No hay pedidos</p>
       ) : (
         <div className="space-y-4">
+
+          console.log("ORDERS ARRAY:", orders);
+
+
 {orders.map((o) => {
+  console.log("ORDER DEBUG:", o);
+  console.log("ORDER FULL:", o);
   const isOpen = expandedId === o.id;
 
   return (
@@ -115,6 +122,44 @@ const toggle = (id) => {
               }}
             />
           )}
+
+          {o.customer?.phone && (
+  <p>
+    <b>Teléfono:</b>{' '}
+    <a
+      href={`https://wa.me/${String(o.customer.phone).replace(/\D/g, '')}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-green-600 underline"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {o.customer.phone}
+    </a>
+  </p>
+)}
+
+
+{/* comprobante SOLO EN EXPAND */}
+{(() => {
+  const proof = o.transfer_proof;
+
+  if (!proof) return null;
+
+  return (
+    <div>
+      <p className="font-medium mb-2">Comprobante de transferencia</p>
+
+      <a
+        href={proof.startsWith('/') ? proof : `/${proof}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 underline"
+      >
+        Ver comprobante
+      </a>
+    </div>
+  );
+})()}
 
           {/* ACTIONS */}
           <div className="flex gap-2 flex-wrap">

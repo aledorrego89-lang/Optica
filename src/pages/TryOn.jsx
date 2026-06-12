@@ -207,7 +207,7 @@ export default function TryOn() {
                 </div>
               ) : (
                 <ProductSelector
-                  products={products.filter(p => p.in_stock)}
+                  products={products}
                   selectedId={selectedProduct?.id}
                   onSelect={setSelectedProduct}
                 />

@@ -1,21 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  Scan,
-  ShoppingBag,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-
+import { Link } from 'react-router-dom';
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden  pt-4">
-      {/* Background */}
+<section className="relative overflow-hidden pt-24 md:pt-4">
+
+      {/* Fondo */}
       <div className="absolute inset-0 bg-background" />
 
-      {/* Blur */}
-      <div className="absolute top-0 left-0 w-72 md:w-96 h-72 md:h-96 bg-primary/15 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-72 md:w-96 h-72 md:h-96 bg-primary/10 rounded-full blur-3xl" />
+      {/* Blurs */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
 
       {/* Grid */}
       <div
@@ -27,63 +22,93 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-12 pt-16 pb-0 lg:pt-20 lg:pb-4">
-        <div className="max-w-4xl">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-12">
+
+        <div className="grid lg:grid-cols-2 gap-10 items-center min-h-[550px]">
+
+          {/* TEXTO */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 mb-4 mt-4">
-              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-medium">
-                Probador Virtual Disponible
-              </span>
-            </div>
 
-       <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+
+
+<Link to="/try-on">
+  <div className="relative inline-flex items-center gap-3 px-5 py-3 rounded-full mb-6 overflow-hidden border border-sky-400/30 bg-gradient-to-r from-sky-500/15 via-primary/10 to-sky-500/15 backdrop-blur-sm cursor-pointer hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-sky-500/20">
+
+    {/* Reflejo animado */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute top-0 -left-32 h-full w-20 bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-12 animate-shine" />
+    </div>
+
+    <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-sky-500 text-white">
+      👓
+    </div>
+
+    <div className="relative">
+      <div className="text-base md:text-sm font-extrabold text-sky-600 tracking-wide">
+        PROBADOR VIRTUAL
+      </div>
+
+      {/* <div className="text-xs text-muted-foreground">
+        Probá tus lentes en tiempo real
+      </div> */}
+    </div>
+
+  </div>
+</Link>
+
+
+
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
               Encontrá tus
               <span className="block text-primary">
                 lentes perfectos
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-2">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl">
               Probá cualquier modelo sobre tu rostro,
               cargá tu receta y recibí tus lentes sin
               salir de casa.
             </p>
+          </motion.div>
 
-            {/* <div className="flex flex-col sm:flex-row gap-3 mb-8">
-              <Link to="/try-on">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto rounded-full"
-                >
-                  <Scan className="w-5 h-5 mr-2" />
-                  Probar Ahora
-                </Button>
-              </Link>
+          {/* IMAGEN */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9 }}
+            className="relative"
+          >
 
-              <Link to="/catalog">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto rounded-full"
-                >
-                  <ShoppingBag className="w-5 h-5 mr-2" />
-                  Ver Catálogo
-                </Button>
-              </Link>
+            {/* Glow detrás */}
+            <div className="absolute inset-0 bg-gradient-to-r from-sky-500/20 via-blue-500/10 to-transparent blur-3xl scale-110" />
+
+            {/* Imagen */}
+            <div className="relative overflow-hidden rounded-[40px]">
+
+              <img
+                src="/portada.jpg"
+                alt="Lentes"
+                className="w-full h-auto object-cover"
+              />
+
+              {/* Degradado izquierdo para fundir con el texto */}
+<div
+  className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent"
+/>              {/* Degradado inferior */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent" />
+
             </div>
 
-            <div className="flex flex-wrap gap-6 text-sm md:text-base text-muted-foreground">
-              <span>✓ +500 clientes</span>
-              <span>✓ +100 modelos</span>
-              <span>✓ Envíos a todo el país</span>
-            </div> */}
           </motion.div>
+
         </div>
+
       </div>
     </section>
   );

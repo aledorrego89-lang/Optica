@@ -116,6 +116,17 @@ const defaultForm = () => ({
   in_stock: true,
 });
 
+
+const formatDateAR = (dateString) => {
+  if (!dateString) return 'Sin fecha';
+
+  return new Intl.DateTimeFormat('es-AR', {
+    timeZone: 'America/Argentina/Buenos_Aires',
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(dateString));
+};
+
 /* ========================= COMPONENT ========================= */
 
 
@@ -147,11 +158,11 @@ export default function Admin() {
   const [galleryImages, setGalleryImages] =
     useState([]);
 
-    const [orderSearch, setOrderSearch] = useState('');
+  const [orderSearch, setOrderSearch] = useState('');
 
-const [orderStatusFilter, setOrderStatusFilter] = useState('all');
+  const [orderStatusFilter, setOrderStatusFilter] = useState('all');
 
-const lastOrderIdRef = React.useRef(null);
+  const lastOrderIdRef = React.useRef(null);
 
 
   /* ========================= LOGIN ========================= */
@@ -173,44 +184,44 @@ const lastOrderIdRef = React.useRef(null);
     enabled: adminLoggedIn === true,
   });
 
-const ordersQuery = useQuery({
-  queryKey: ['admin-orders'],
-  queryFn: getOrders,
-  enabled: adminLoggedIn === true,
+  const ordersQuery = useQuery({
+    queryKey: ['admin-orders'],
+    queryFn: getOrders,
+    enabled: adminLoggedIn === true,
 
-  refetchInterval: 5000, // cada 5 segundos
-  refetchOnWindowFocus: true, // refresca al volver a la pestaña
-});
+    refetchInterval: 5000, // cada 5 segundos
+    refetchOnWindowFocus: true, // refresca al volver a la pestaña
+  });
 
   /* ========================= MUTATIONS ========================= */
 
-const deleteMutation = useMutation({
-  mutationFn: async (id) => {
-    const res = await fetch(`/api/products.php?id=${id}`, {
-      method: 'DELETE',
-    });
+  const deleteMutation = useMutation({
+    mutationFn: async (id) => {
+      const res = await fetch(`/api/products.php?id=${id}`, {
+        method: 'DELETE',
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok || !data.ok) {
-      throw new Error(data.error || 'Error eliminando producto');
-    }
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || 'Error eliminando producto');
+      }
 
-    return data;
-  },
+      return data;
+    },
 
-  onSuccess: () => {
-    queryClient.invalidateQueries({
-      queryKey: ['admin-products'],
-    });
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['admin-products'],
+      });
 
-    toast.success('Producto eliminado');
-  },
+      toast.success('Producto eliminado');
+    },
 
-  onError: (err) => {
-    toast.error(err.message);
-  },
-});
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
 
   const orderStatusMutation = useMutation({
     mutationFn: updateOrderStatus,
@@ -376,49 +387,49 @@ const deleteMutation = useMutation({
   const products =
     productsQuery.data ?? [];
 
-const orders = [...(ordersQuery.data ?? [])].reverse();
+  const orders = [...(ordersQuery.data ?? [])].reverse();
 
-    const statusCounts = orders.reduce(
-  (acc, o) => {
-    const status = o.status;
+  const statusCounts = orders.reduce(
+    (acc, o) => {
+      const status = o.status;
 
-    acc.all += 1;
+      acc.all += 1;
 
-    if (status === 'Pendiente') acc.Pendiente += 1;
-    if (status === 'En proceso') acc['En proceso'] += 1;
-    if (status === 'Terminados') acc.Terminados += 1;
-    if (status === 'Entregados') acc.Entregados += 1;
+      if (status === 'Pendiente') acc.Pendiente += 1;
+      if (status === 'En proceso') acc['En proceso'] += 1;
+      if (status === 'Terminados') acc.Terminados += 1;
+      if (status === 'Entregados') acc.Entregados += 1;
 
-    return acc;
-  },
-  {
-    all: 0,
-    Pendiente: 0,
-    'En proceso': 0,
-    Terminados: 0,
-    Entregados: 0,
-  }
-);
+      return acc;
+    },
+    {
+      all: 0,
+      Pendiente: 0,
+      'En proceso': 0,
+      Terminados: 0,
+      Entregados: 0,
+    }
+  );
 
-const filteredOrders = orders.filter((o) => {
-  const q = orderSearch.toLowerCase();
+  const filteredOrders = orders.filter((o) => {
+    const q = orderSearch.toLowerCase();
 
-  const matchesSearch =
-    o.customer?.name?.toLowerCase().includes(q) ||
-    o.customer?.email?.toLowerCase().includes(q) ||
-    String(o.id).includes(q) ||
-    String(o.status).toLowerCase().includes(q);
+    const matchesSearch =
+      o.customer?.name?.toLowerCase().includes(q) ||
+      o.customer?.email?.toLowerCase().includes(q) ||
+      String(o.id).includes(q) ||
+      String(o.status).toLowerCase().includes(q);
 
-  const matchesStatus =
-    orderStatusFilter === 'all' ||
-    o.status === orderStatusFilter;
+    const matchesStatus =
+      orderStatusFilter === 'all' ||
+      o.status === orderStatusFilter;
 
-  return matchesSearch && matchesStatus;
-});
+    return matchesSearch && matchesStatus;
+  });
 
-const visibleOrders = showAllOrders
-  ? filteredOrders
-  : filteredOrders.slice(0, 4);
+  const visibleOrders = showAllOrders
+    ? filteredOrders
+    : filteredOrders.slice(0, 4);
 
   const isLoading =
     productsQuery.isLoading;
@@ -695,22 +706,22 @@ const visibleOrders = showAllOrders
                 }
               />
 
-<select
-  value={form.category}
-  onChange={(e) =>
-    setForm({
-      ...form,
-      category: e.target.value,
-    })
-  }
-  className="w-full h-10 px-3 border rounded-md bg-background"
->
-  <option value="">Seleccionar categoría</option>
-  <option value="optical">Óptico</option>
-  <option value="sunglasses">Sol</option>
-  <option value="blue_light">Luz Azul</option>
-  <option value="reading">Lectura</option>
-</select>
+              <select
+                value={form.category}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    category: e.target.value,
+                  })
+                }
+                className="w-full h-10 px-3 border rounded-md bg-background"
+              >
+                <option value="">Seleccionar categoría</option>
+                <option value="optical">Óptico</option>
+                <option value="sunglasses">Sol</option>
+                <option value="blue_light">Luz Azul</option>
+                <option value="reading">Lectura</option>
+              </select>
 
               <Input
                 placeholder="Descripción"
@@ -920,76 +931,71 @@ const visibleOrders = showAllOrders
 
 
               <div className="space-y-4 mt-6">
-<div className="mt-4 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+                <div className="mt-4 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
 
-  {/* SEARCH */}
-  <Input
-    placeholder="Buscar por nombre, email, estado o ID..."
-    value={orderSearch}
-    onChange={(e) => setOrderSearch(e.target.value)}
-    className="max-w-md"
-  />
+                  {/* SEARCH */}
+                  <Input
+                    placeholder="Buscar por nombre, email, estado o ID..."
+                    value={orderSearch}
+                    onChange={(e) => setOrderSearch(e.target.value)}
+                    className="max-w-md"
+                  />
 
-  {/* FILTER BUTTONS */}
-<div className="flex flex-wrap gap-1.5">
+                  {/* FILTER BUTTONS */}
+                  <div className="flex flex-wrap gap-1.5">
 
-  <button
-    onClick={() => setOrderStatusFilter('all')}
-    className={`px-2.5 py-1 rounded-lg text-xs border transition ${
-      orderStatusFilter === 'all'
-        ? 'bg-black text-white'
-        : 'bg-transparent hover:bg-gray-100'
-    }`}
-  >
-    Todos ({statusCounts.all})
-  </button>
+                    <button
+                      onClick={() => setOrderStatusFilter('all')}
+                      className={`px-2.5 py-1 rounded-lg text-xs border transition ${orderStatusFilter === 'all'
+                        ? 'bg-black text-white'
+                        : 'bg-transparent hover:bg-gray-100'
+                        }`}
+                    >
+                      Todos ({statusCounts.all})
+                    </button>
 
-  <button
-    onClick={() => setOrderStatusFilter('Pendiente')}
-    className={`px-2.5 py-1 rounded-lg text-xs transition ${
-      orderStatusFilter === 'Pendiente'
-        ? 'bg-yellow-500 text-white'
-        : 'bg-yellow-500/20 hover:bg-yellow-500/30'
-    }`}
-  >
-    Pendientes ({statusCounts.Pendiente})
-  </button>
+                    <button
+                      onClick={() => setOrderStatusFilter('Pendiente')}
+                      className={`px-2.5 py-1 rounded-lg text-xs transition ${orderStatusFilter === 'Pendiente'
+                        ? 'bg-yellow-500 text-white'
+                        : 'bg-yellow-500/20 hover:bg-yellow-500/30'
+                        }`}
+                    >
+                      Pendientes ({statusCounts.Pendiente})
+                    </button>
 
-  <button
-    onClick={() => setOrderStatusFilter('En proceso')}
-    className={`px-2.5 py-1 rounded-lg text-xs transition ${
-      orderStatusFilter === 'En proceso'
-        ? 'bg-blue-500 text-white'
-        : 'bg-blue-500/20 hover:bg-blue-500/30'
-    }`}
-  >
-    En proceso ({statusCounts['En proceso']})
-  </button>
+                    <button
+                      onClick={() => setOrderStatusFilter('En proceso')}
+                      className={`px-2.5 py-1 rounded-lg text-xs transition ${orderStatusFilter === 'En proceso'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-blue-500/20 hover:bg-blue-500/30'
+                        }`}
+                    >
+                      En proceso ({statusCounts['En proceso']})
+                    </button>
 
-  <button
-    onClick={() => setOrderStatusFilter('Terminados')}
-    className={`px-2.5 py-1 rounded-lg text-xs transition ${
-      orderStatusFilter === 'Terminados'
-        ? 'bg-green-500 text-white'
-        : 'bg-green-500/20 hover:bg-green-500/30'
-    }`}
-  >
-    Terminados ({statusCounts.Terminados})
-  </button>
+                    <button
+                      onClick={() => setOrderStatusFilter('Terminados')}
+                      className={`px-2.5 py-1 rounded-lg text-xs transition ${orderStatusFilter === 'Terminados'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-green-500/20 hover:bg-green-500/30'
+                        }`}
+                    >
+                      Terminados ({statusCounts.Terminados})
+                    </button>
 
-  <button
-    onClick={() => setOrderStatusFilter('Entregados')}
-    className={`px-2.5 py-1 rounded-lg text-xs transition ${
-      orderStatusFilter === 'Entregados'
-        ? 'bg-purple-500 text-white'
-        : 'bg-purple-500/20 hover:bg-purple-500/30'
-    }`}
-  >
-    Entregados ({statusCounts.Entregados})
-  </button>
+                    <button
+                      onClick={() => setOrderStatusFilter('Entregados')}
+                      className={`px-2.5 py-1 rounded-lg text-xs transition ${orderStatusFilter === 'Entregados'
+                        ? 'bg-purple-500 text-white'
+                        : 'bg-purple-500/20 hover:bg-purple-500/30'
+                        }`}
+                    >
+                      Entregados ({statusCounts.Entregados})
+                    </button>
 
-</div>
-</div>
+                  </div>
+                </div>
 
                 {orders.length === 0 ? (
 
@@ -1008,7 +1014,8 @@ const visibleOrders = showAllOrders
 
                       <div
                         key={o.id}
-                        className="border p-4 rounded-2xl transition"
+                        className={`border p-4 rounded-2xl transition ${isOpen ? 'bg-black/5 border-black/20' : 'bg-white'
+                          }`}
                       >
 
                         {/* HEADER */}
@@ -1028,26 +1035,46 @@ const visibleOrders = showAllOrders
 
                             <div>
 
-<div className="flex items-center gap-2">
-  <p className="font-bold text-lg">
-    {o.customer?.name || 'Sin nombre'}
-  </p>
+                              <div className="flex items-center gap-2">
+                                <p className="font-bold text-lg">
+                                  {o.customer?.name || 'Sin nombre'}
+                                </p>
 
-  {String(o.payment_status).toLowerCase() === 'approved' && (
-    <span
-      className="text-green-600 text-xl"
-      title="Pago aprobado"
-    >
-      ✅ Pago aprobado
-    </span>
-  )}
-</div>
+                                {String(o.payment_status).toLowerCase() === 'approved' && (
+                                  <span
+                                    className="text-green-600 text-xl"
+                                    title="Pago aprobado"
+                                  >
+                                    ✅ Pago aprobado
+                                  </span>
+                                )}
+                              </div>
 
                               <p className="text-sm text-muted-foreground">
                                 {o.customer?.email ||
                                   'Sin email'}
                               </p>
-
+                              <a
+                                href={`https://wa.me/${String(o.customer?.phone || '').replace(/\D/g, '')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-green-600 underline"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {o.customer?.phone || 'Sin teléfono'}
+                              </a>
+                              <br></br>
+                              {o.transfer_proof && (
+                                <a
+                                  href={o.transfer_proof}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 underline"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  Comprobante de pago
+                                </a>
+                              )}
 
                             </div>
 
@@ -1175,9 +1202,13 @@ const visibleOrders = showAllOrders
                             <span className="font-semibold">
                               ${o.total || 0}
                             </span>
-
+                            <div className="text-xs text-muted-foreground mt-1">
+                              🕒 {formatDateAR(o.created_at)}
+                            </div>
                           </div>
                         </div>
+
+
 
                         {/* EXPAND */}
 
@@ -1193,23 +1224,38 @@ const visibleOrders = showAllOrders
 
                               <div className="space-y-2">
 
-                                {o.items?.map(
-                                  (item, idx) => (
-                                    <div
-                                      key={idx}
-                                      className="flex justify-between text-sm border-b pb-2"
-                                    >
-
-                                      <span>
-                                        {item.name}
-                                      </span>
-
-                                      <span className="font-medium">
-                                        ${item.price}
-                                      </span>
+                                {o.cart?.map((item, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex items-center gap-3 p-2 border rounded-lg"
+                                  >
+                                    {/* IMAGEN MÁS GRANDE */}
+                                    <div className="w-32 h-32 flex-shrink-0">
+                                      <img
+                                        src={item.image_url}
+                                        className="w-32 h-32 object-contain rounded-lg border bg-white"
+                                        alt={item.name}
+                                      />
                                     </div>
-                                  )
-                                )}
+
+                                    {/* INFO */}
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-center gap-2">
+                                        <span className="font-medium truncate">
+                                          {item.name}
+                                        </span>
+
+                                        <span className="text-muted-foreground">
+                                          x{item.quantity}
+                                        </span>
+                                      </div>
+
+                                      <div className="text-xs text-muted-foreground">
+                                        ${item.price} c/u
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
                               </div>
                             </div>
 

@@ -9,8 +9,25 @@ export default function LiveTryOn({ glassesImage }) {
   useEffect(() => {
     if (!glassesImage) return;
 
-    const glasses = new Image();
-    glasses.src = glassesImage;
+   let glasses = null;
+
+const loadGlasses = async (src) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = src;
+
+    img.onload = () => resolve(img);
+  });
+};
+
+
+let active = true;
+
+loadGlasses(glassesImage).then((img) => {
+  if (!active) return;
+  glasses = img;
+});
+
 
     const faceMesh = new FaceMesh({
       locateFile: (file) =>
@@ -20,8 +37,8 @@ export default function LiveTryOn({ glassesImage }) {
     faceMesh.setOptions({
       maxNumFaces: 1,
       refineLandmarks: true,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5,
+      minDetectionConfidence: 0.3,
+      minTrackingConfidence: 0.3,
     });
 
     faceMesh.onResults((results) => {
@@ -57,7 +74,7 @@ export default function LiveTryOn({ glassesImage }) {
 
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      const centerX = (lx + rx) / 2 - 2;
+      const centerX = (lx + rx) / 2 - 0;
       const centerY = (ly + ry) / 2 + 15;
 
       const width = distance * 1.8;

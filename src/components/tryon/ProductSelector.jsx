@@ -61,22 +61,33 @@ export default function ProductSelector({
         {products.map((product) => {
           const images = product.images?.length
             ? product.images
-            : [
-                product.overlay_url ||
-                  product.image_url,
-              ].filter(Boolean);
+            : [product.overlay_url || product.image_url].filter(Boolean);
+
+          const outOfStock = !product.in_stock;
 
           return (
             <button
               key={product.id}
-              onClick={() => onSelect(product)}
-              className={`relative group rounded-xl overflow-hidden border-2 transition-all duration-300 text-left ${
-                String(selectedId) ===
-                String(product.id)
+              onClick={() => {
+                if (outOfStock) return; // ❌ bloquea selección
+                onSelect(product);
+              }}
+              disabled={outOfStock}
+              className={`relative group rounded-xl overflow-hidden border-2 transition-all duration-300 text-left
+                ${String(selectedId) === String(product.id)
                   ? 'border-primary shadow-lg shadow-primary/10'
                   : 'border-border hover:border-primary/30'
-              }`}
+                }
+                ${outOfStock ? 'opacity-80 ' : ''}
+              `}
             >
+              {/* BADGE SIN STOCK */}
+              {outOfStock && (
+                <span className="absolute top-2 left-2 z-10 text-[10px] bg-red-500 text-white px-2 py-1 rounded">
+                  Sin stock
+                </span>
+              )}
+
               {/* IMAGE */}
               <div className="aspect-square bg-muted/50 overflow-hidden">
                 <AutoCarousel images={images} />
@@ -98,8 +109,7 @@ export default function ProductSelector({
               </div>
 
               {/* SELECTED CHECK */}
-              {String(selectedId) ===
-                String(product.id) && (
+              {String(selectedId) === String(product.id) && (
                 <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
                   <Check className="w-3 h-3 text-primary-foreground" />
                 </div>

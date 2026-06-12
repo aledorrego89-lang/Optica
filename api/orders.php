@@ -48,6 +48,31 @@ if ($method === "GET") {
 if ($method === "POST") {
   $input = json_decode(file_get_contents("php://input"), true);
 
+  $productsFile = dirname(__DIR__) . "/data/products.json";
+  $products = file_exists($productsFile)
+    ? json_decode(file_get_contents($productsFile), true)
+    : [];
+
+  $productsMap = [];
+  foreach ($products as $p) {
+    $productsMap[$p["id"]] = $p;
+  }
+
+  // 🔥 ENRIQUECER ITEMS
+  if (isset($input["cart"])) {
+    $input["items"] = array_map(function ($item) use ($productsMap) {
+      $product = $productsMap[$item["id"]] ?? null;
+
+      return [
+        "id" => $item["id"],
+        "name" => $product["name"] ?? "Sin nombre",
+        "image" => $product["images"][0] ?? null,
+        "price" => $product["price"] ?? $item["price"],
+        "qty" => $item["qty"] ?? 1
+      ];
+    }, $input["cart"]);
+  }
+
   $data = load();
 
   $input["id"] = uniqid();

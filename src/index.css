@@ -142,3 +142,27 @@
   background: hsl(var(--muted-foreground) / 0.5);
 }
 
+@keyframes shine {
+  0% {
+    left: -120px;
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    left: calc(100% + 120px);
+    opacity: 0;
+  }
+}
+
+.animate-shine {
+  animation: shine 3s linear infinite;
+}
+

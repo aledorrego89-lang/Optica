@@ -34,50 +34,35 @@ const STEPS = [
   },
 ];
 
-function FaceCaricature({ offset, tilt }) {
-  return (
-    <motion.div
-      animate={{ x: offset.x, y: offset.y, rotate: tilt }}
-      transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-className="relative w-32 h-36 mx-auto"
-    >
-      {/* Head */}
-      <motion.div
-        className="absolute inset-0 rounded-[50%] bg-amber-200 border-4 border-amber-300"
-        style={{ borderRadius: '50% 50% 45% 45%' }}
-      />
-      {/* Hair */}
-      <div className="absolute -top-3 left-2 right-2 h-10 bg-amber-800 rounded-t-full" style={{ borderRadius: '50% 50% 10% 10%' }} />
-      {/* Eyes */}
-      <div className="absolute top-10 left-6 w-5 h-5 bg-white rounded-full border-2 border-gray-700 flex items-center justify-center">
-        <motion.div
-          className="w-2.5 h-2.5 bg-gray-800 rounded-full"
-          animate={{ x: offset.x > 0 ? 1 : offset.x < 0 ? -1 : 0 }}
-        />
-      </div>
-      <div className="absolute top-10 right-6 w-5 h-5 bg-white rounded-full border-2 border-gray-700 flex items-center justify-center">
-        <motion.div
-          className="w-2.5 h-2.5 bg-gray-800 rounded-full"
-          animate={{ x: offset.x > 0 ? 1 : offset.x < 0 ? -1 : 0 }}
-        />
-      </div>
-      {/* Glasses */}
 
-      {/* Nose */}
-      <div className="absolute top-16 left-1/2 -translate-x-1/2 w-4 h-4">
-        <div className="absolute bottom-0 left-0 w-2 h-2 rounded-full bg-amber-300 border border-amber-400" />
-        <div className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-amber-300 border border-amber-400" />
-      </div>
-      {/* Mouth */}
-      <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 w-8 h-4 overflow-hidden"
-        animate={{ scaleY: tilt !== 0 ? 0.7 : 1 }}
-      >
-        <div className="w-8 h-8 rounded-full border-4 border-amber-700 border-t-transparent -mt-4" />
-      </motion.div>
-    </motion.div>
+
+function FaceGuideImage({ offset, tilt, current }) {
+  return (
+    <motion.img
+      src="/face-guide.png"
+      alt="Ejemplo de posición correcta"
+      animate={{
+        x: offset.x,
+        y: offset.y,
+        rotate: tilt,
+        scale: current.id === "center" ? 1 : 0.96
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 120,
+        damping: 18
+      }}
+      
+ className="w-50 h-72 object-cover select-none pointer-events-none"
+  style={{
+    maskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)',
+    WebkitMaskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)'
+  }}
+      draggable={false}
+    />
   );
 }
+
 
 export default function FaceGuide({ onContinue }) {
   const [step, setStep]     = useState(0);
@@ -108,7 +93,27 @@ export default function FaceGuide({ onContinue }) {
       {/* Oval frame with face */}
       <div className="relative mx-auto w-56 h-64 mb-6">
         {/* Oval guide */}
-        <div className="absolute inset-0 rounded-[50%] border-4 border-dashed border-primary/40" style={{ borderRadius: '50% 50% 45% 45%' }} />
+<motion.div
+  animate={{
+    opacity: [0.6, 1, 0.6]
+  }}
+  transition={{
+    duration: 2,
+    repeat: Infinity
+  }}
+  className="
+    absolute inset-0
+    rounded-[50%]
+    border-[6px]
+    border-dashed
+    border-primary
+  "
+  style={{
+    borderRadius: '50% 50% 45% 45%',
+    boxShadow: '0 0 15px rgba(59,130,246,0.4)'
+  }}
+/>
+
         {/* Corner markers */}
         {[
           'top-2 left-8 border-t-2 border-l-2 rounded-tl-lg',
@@ -122,16 +127,24 @@ export default function FaceGuide({ onContinue }) {
         {/* Crosshair */}
 <div className="absolute inset-0 pointer-events-none z-20">
   {/* Horizontal line (eye level) */}
-  <div className="absolute top-[42%] left-0 w-full h-px bg-primary/25" />
+<div className="absolute top-[48%] left-0 w-full h-0.5 bg-primary/40" />
 
   {/* Vertical center line */}
-  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-full w-px bg-primary/15" />
+<div className="absolute top-0 left-[49%] h-full w-0.5 bg-primary/40" />
 </div>
 
         {/* Face */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* <div className="absolute inset-0 flex items-center justify-center">
           <FaceCaricature offset={current.offset} tilt={current.tilt} />
-        </div>
+        </div> */}
+
+<div className="absolute inset-0 flex items-center justify-center">
+<FaceGuideImage
+  offset={current.offset}
+  tilt={current.tilt}
+  current={current}
+/>
+</div>
 
         {/* Done checkmark */}
         <AnimatePresence>

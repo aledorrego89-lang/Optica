@@ -116,29 +116,31 @@ useEffect(() => {
           </h3>
           {/* <p className="font-heading text-2xl font-bold text-primary"> */}
           <div className="flex items-center justify-between mt-2">
+{product.in_stock ? (
   <p className="font-heading text-lg font-bold text-primary">
     ${product.price?.toLocaleString()}
   </p>
+) : (
+  <p className="font-heading text-sm font-semibold text-red-500">
+    Sin stock
+  </p>
+)}
 
-  <button
-    onClick={handleAdd}
-    className="
-      w-9
-      h-9
-      rounded-full
-      bg-primary/10
-      hover:bg-primary
-      text-primary
-      hover:text-white
-      flex
-      items-center
-      justify-center
-      transition-all
-      duration-200
-    "
-  >
-    <ShoppingCart className="w-4 h-4" />
-  </button>
+<button
+  onClick={product.in_stock ? handleAdd : undefined}
+  disabled={!product.in_stock}
+  className={`
+    w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200
+    ${product.in_stock
+      ? "bg-primary/10 hover:bg-primary text-primary hover:text-white"
+      : "bg-muted text-muted-foreground cursor-not-allowed opacity-50"
+    }
+  `}
+>
+  <ShoppingCart className="w-4 h-4" />
+</button>
+
+
 </div>
         </div>
       </div>
