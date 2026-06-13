@@ -10,7 +10,7 @@ const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [processedGlasses, setProcessedGlasses] = useState(null);
   const [processing, setProcessing] = useState(false);
-const [baseOffset] = useState({ x: 3, y: 4 }); //correccion de posicion lentes
+const [baseOffset] = useState({ x: 2, y: 4 }); //correccion de posicion lentes
   // When glasses change, remove the white background
   useEffect(() => {
     if (!glassesImage) {
@@ -116,7 +116,7 @@ className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden bg-
           src={facePhoto}
           alt="Tu rostro"
           className="w-full h-full object-cover"
-          style={{ transform: 'scaleX(-1)' }}
+          style={{ transform: 'scaleX(-1) scale(0.9)' }}
           draggable={false}
         />
 
@@ -144,8 +144,8 @@ className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden bg-
             ${position.y + baseOffset.y}px)
   scale(${scale})
 `,
-                width: '72%',
-                maxWidth: '320px',
+width: '45%',
+maxWidth: '180px',
                 userSelect: 'none',
                 WebkitUserSelect: 'none',
                 touchAction: 'none',

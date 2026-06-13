@@ -16,6 +16,22 @@ import Checkout from '@/pages/Checkout';
 import Admin from '@/pages/Admin';
 import AdminOrders from '@/pages/AdminOrders';
 import TryOnLive from '@/pages/TryOnLive';
+import ProductDetail from '@/pages/ProductDetail';
+
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
+
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -37,7 +53,10 @@ const AuthenticatedApp = () => {
     }
   }
 
-  return (
+return (
+  <>
+    <ScrollToTop />
+
     <Routes>
       <Route element={<AppLayout />}>
         <Route path="/" element={<Home />} />
@@ -47,12 +66,14 @@ const AuthenticatedApp = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/orders" element={<AdminOrders />} />
-        <Route path="/tryon-live" element={<TryOnLive />}
-        />
+        <Route path="/tryon-live" element={<TryOnLive />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
       </Route>
+
       <Route path="*" element={<PageNotFound />} />
     </Routes>
-  );
+  </>
+);
 };
 
 function App() {

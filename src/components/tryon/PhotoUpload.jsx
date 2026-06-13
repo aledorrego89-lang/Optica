@@ -91,8 +91,18 @@ export default function PhotoUpload({ onPhotoReady }) {
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-primary/40" />
               <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-primary/40" />
-              <div className="absolute top-[10%] left-[20%] right-[20%] bottom-[10%] border border-primary/50 rounded-full" />
-            </div>
+<div
+  className="
+    absolute
+    top-[20%]
+    left-[30%]
+    right-[30%]
+    bottom-[20%]
+    border-4
+    border-primary/50
+    rounded-full
+  "
+/>            </div>
           </motion.div>
         ) : mode === 'uploading' ? (
           <motion.div
