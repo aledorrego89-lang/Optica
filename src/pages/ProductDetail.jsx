@@ -6,6 +6,18 @@ import { Button } from '@/components/ui/button';
 export default function ProductDetail() {
   const { id } = useParams();
 
+  const colorMap = {
+  Negro: "#111111",
+  Blanco: "#FFFFFF",
+  Rojo: "#C62828",
+  Azul: "#1565C0",
+  Verde: "#2E7D32",
+  Dorado: "#D4AF37",
+  Plateado: "#BFC5CA",
+  Gris: "#606060",
+  Transparente: "#EEEEEE"
+};
+
   const { data: products = [] } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
@@ -15,32 +27,38 @@ export default function ProductDetail() {
   });
 
   const product = products.find(
-  p => String(p.id) === String(id)
-);
-console.log(id);
-console.log(products);
+    p => String(p.id) === String(id)
+  );
+  console.log(id);
+  console.log(products);
   const images = product?.images || [];
 
   const [selected, setSelected] = useState(0);
 
   if (!products.length) {
-  return (
-    <div className="p-10 text-center">
-      Cargando...
-    </div>
-  );
-}
+    return (
+      <div className="p-10 text-center">
+        Cargando...
+      </div>
+    );
+  }
 
-if (!product) {
-  return (
-    <div className="p-10 text-center">
-      Producto no encontrado
-    </div>
+  if (!product) {
+    return (
+      <div className="p-10 text-center">
+        Producto no encontrado
+      </div>
+    );
+  }
+
+  const variants = products.filter(
+    p => p.model === product.model
   );
-}
+
+
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
+    <div className="max-w-7xl mx-auto px-6 pt-24 py-10">
 
       <div className="grid lg:grid-cols-2 gap-10">
 
@@ -65,6 +83,9 @@ if (!product) {
 
         </div>
 
+
+
+
         <div>
 
           <h1 className="text-3xl font-bold">
@@ -79,11 +100,51 @@ if (!product) {
             {product.description}
           </p>
 
+
+
+            <div className="mt-6">
+              <h3 className="text-sm font-semibold mb-2">
+                Color: {product.color}
+              </h3>
+
+<div className="flex gap-3 flex-wrap">
+  {variants.map((variant) => (
+    <button
+      key={variant.id}
+      title={variant.color}
+      onClick={() => {
+        window.location.href = `/product/${variant.id}`;
+      }}
+      className={`
+        w-8 h-8 rounded-full transition-all duration-200
+        hover:scale-110
+        ${
+          variant.id === product.id
+            ? "ring-2 ring-black ring-offset-2"
+            : "ring-1 ring-gray-300"
+        }
+      `}
+      style={{
+        backgroundColor: colorMap[variant.color] || "#ccc",
+        border:
+          variant.color === "Blanco" ||
+          variant.color === "Transparente"
+            ? "1px solid #999"
+            : "none",
+      }}
+    />
+  ))}
+</div>
+            </div>
+          
+
+
+
           <Button
             className="mt-8"
             onClick={() =>
               window.location.href =
-                `/try-on?productId=${product.id}`
+              `/try-on?productId=${product.id}`
             }
           >
             Probar Virtualmente

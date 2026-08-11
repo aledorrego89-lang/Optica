@@ -166,3 +166,24 @@
   animation: shine 3s linear infinite;
 }
 
+/* centrado de cara */
+@keyframes breathe {
+  0% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+}
+
+.animate-breathe {
+  animation: breathe 2.5s ease-in-out infinite;
+}

@@ -14,11 +14,11 @@ export default function Footer() {
                 <Eye className="w-5 h-5 text-primary" />
               </div>
               <span className="font-heading font-semibold text-lg tracking-tight">
-                Optica Blanco<span className="text-primary">.</span>
+                Optica White<span className="text-primary">.</span>
               </span>
             </div>
             <p className="text-sm text-background/60 leading-relaxed max-w-xs">
-              Precisión óptica y diseño de vanguardia. Tu visión, nuestra obsesión.
+              Precisión, óptica y diseño de vanguardia. Tu visión, nuestra obsesión.
             </p>
           </div>
 
@@ -36,7 +36,7 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm text-background/60">
                 <Mail className="w-4 h-4 text-primary" />
-                contacto@ocular.com
+                pedidos@opticawhite.com.ar
               </div>
               <div className="flex items-center gap-3 text-sm text-background/60">
                 <Phone className="w-4 h-4 text-primary" />
@@ -44,7 +44,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3 text-sm text-background/60">
                 <MapPin className="w-4 h-4 text-primary" />
-                Buenos Aires, Argentina
+                Bahia Blanca, Buenos Aires, Argentina
               </div>
             </div>
           </div>

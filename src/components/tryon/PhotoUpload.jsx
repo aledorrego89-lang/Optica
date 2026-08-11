@@ -1,7 +1,10 @@
-import React, { useRef, useState } from 'react';
+
 import { Camera, Upload, Image as ImageIcon, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { FaceDetection } from '@mediapipe/face_detection';
+import { Camera as MPCamera } from '@mediapipe/camera_utils';
 
 export default function PhotoUpload({ onPhotoReady }) {
   const fileRef = useRef(null);
@@ -10,24 +13,134 @@ export default function PhotoUpload({ onPhotoReady }) {
   const [mode, setMode] = useState(null); // null | 'camera' | 'uploading'
   const [cameraActive, setCameraActive] = useState(false);
   const [uploading, setUploading] = useState(false);
+const [faceState, setFaceState] = useState('none');
+const detectorRef = useRef(null);
+const mpCameraRef = useRef(null);
+const countdownStarted = useRef(false);
+// none | detected | perfect
 
-  const startCamera = async () => {
-    setMode('camera');
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 640, height: 480 } });
-    if (videoRef.current) {
-      videoRef.current.srcObject = stream;
-      videoRef.current.play();
-      setCameraActive(true);
-    }
-  };
+const [countdown, setCountdown] = useState(null);
 
-  const stopCamera = () => {
-    if (videoRef.current?.srcObject) {
-      videoRef.current.srcObject.getTracks().forEach(t => t.stop());
+
+const startCamera = async () => {
+  setMode('camera');
+
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: { facingMode: 'user' }
+  });
+
+  videoRef.current.srcObject = stream;
+
+  await new Promise((resolve) => {
+    videoRef.current.onloadedmetadata = () => resolve();
+  });
+
+  await videoRef.current.play();
+
+  setCameraActive(true);
+
+const detector = new FaceDetection({
+  locateFile: (file) =>
+    `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`
+});
+
+
+  detector.setOptions({
+    model: 0,
+    minDetectionConfidence: 0.5,
+  });
+
+
+detector.onResults((results) => {
+  if (!results.detections?.length) {
+    setFaceState('none');
+    return;
+  }
+
+  const box = results.detections[0].boundingBox;
+
+  const centerX = box.xCenter;
+  const centerY = box.yCenter;
+  const width = box.width;
+  const height = box.height;
+const leftEye = results.detections[0].landmarks[0];
+const rightEye = results.detections[0].landmarks[1];
+
+// centro entre ambos ojos
+const faceCenterX = (leftEye.x + rightEye.x) / 2;
+
+// altura promedio de los ojos
+const eyesY = (leftEye.y + rightEye.y) / 2;
+
+// inclinación de la cabeza
+const eyeAlignment = Math.abs(leftEye.y - rightEye.y);
+
+// MUY estricto
+const centered =
+  Math.abs(faceCenterX - 0.5) < 0.02 &&
+  Math.abs(eyesY - 0.5) < 0.02;
+
+const eyesLevel = eyeAlignment < 0.01;
+
+
+
+  // const correctSize =
+  //   width > 0.20 &&
+  //   width < 0.50 &&
+  //   height > 0.25 &&
+  //   height < 0.60;
+  const correctSize =
+  width > 0.32 &&
+  width < 0.60 &&
+  height > 0.40 &&
+  height < 0.75;
+
+if (
+    centered &&
+    correctSize &&
+    eyesLevel 
+) {
+    setFaceState('perfect');
+}
+else if (!eyesLevel) {
+    setFaceState('tilted');
+}
+else {
+    setFaceState('detected');
+}
+});
+
+  detectorRef.current = detector;
+
+
+const mpCamera = new MPCamera(videoRef.current, {
+  onFrame: async () => {
+    try {
+      await detectorRef.current.send({
+        image: videoRef.current
+      });
+    } catch (err) {
+      console.error("MEDIAPIPE ERROR:", err);
     }
-    setCameraActive(false);
-    setMode(null);
-  };
+  },
+});
+
+  mpCamera.start();
+
+
+  mpCameraRef.current = mpCamera;
+};
+
+
+
+
+
+
+  
+
+
+
+
 
   const capturePhoto = () => {
     const video = videoRef.current;
@@ -55,6 +168,58 @@ export default function PhotoUpload({ onPhotoReady }) {
     };
     reader.readAsDataURL(file);
   };
+
+
+
+  const stopCamera = () => {
+  if (videoRef.current?.srcObject) {
+    videoRef.current.srcObject
+      .getTracks()
+      .forEach((t) => t.stop());
+  }
+
+  mpCameraRef.current?.stop?.();
+  mpCameraRef.current = null;
+
+  detectorRef.current?.close?.();
+  detectorRef.current = null;
+
+  setFaceState('none');
+  setCountdown(null);
+  setCameraActive(false);
+  setMode(null);
+};
+
+
+useEffect(() => {
+  if (faceState !== 'perfect') {
+    countdownStarted.current = false;
+    setCountdown(null);
+    return;
+  }
+
+  if (countdownStarted.current) return;
+
+  countdownStarted.current = true;
+
+  setCountdown(3);
+
+  const t1 = setTimeout(() => setCountdown(2), 1000);
+  const t2 = setTimeout(() => setCountdown(1), 2000);
+
+  const t3 = setTimeout(() => {
+    capturePhoto();
+  }, 3000);
+
+  return () => {
+    clearTimeout(t1);
+    clearTimeout(t2);
+    clearTimeout(t3);
+  };
+}, [faceState]);
+
+
+
 
   return (
     <div className="flex flex-col items-center">
@@ -88,21 +253,68 @@ export default function PhotoUpload({ onPhotoReady }) {
               </Button>
             </div>
             {/* Reticle overlay */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-primary/40" />
-              <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-primary/40" />
+{/* Overlay Inteligente */}
+<div className="absolute inset-0 pointer-events-none">
+
+  {/* Cruz */}
+  <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-white/30" />
+  <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-white/30" />
+
+  {/* Ovalo */}
 <div
-  className="
+  className={`
     absolute
-    top-[20%]
-    left-[30%]
-    right-[30%]
-    bottom-[20%]
+    top-[15%]
+    left-[20%]
+    right-[20%]
+    bottom-[15%]
     border-4
-    border-primary/50
     rounded-full
-  "
-/>            </div>
+    transition-all
+    duration-500
+
+${
+  faceState === 'perfect'
+    ? 'border-green-400 shadow-[0_0_60px_rgba(74,222,128,1)]'
+    : faceState === 'detected'
+    ? 'border-yellow-400 animate-breathe shadow-[0_0_20px_rgba(250,204,21,.5)]'
+    : faceState === 'tilted'
+    ? 'border-orange-400 animate-breathe shadow-[0_0_20px_rgba(251,146,60,.5)]'
+    : 'border-white/50'
+}
+  `}
+/>
+
+  {/* Mensaje */}
+  <div className="absolute top-6 left-1/2 -translate-x-1/2">
+{faceState === 'none' && (
+  <div className="px-4 py-2 rounded-full bg-black/70 text-white text-sm animate-breathe">
+    Buscando rostro...
+  </div>
+)}
+
+{faceState === 'detected' && (
+  <div className="px-4 py-2 rounded-full bg-yellow-500 text-black text-sm font-semibold animate-breathe">
+    Centrá tu rostro
+  </div>
+)}
+
+{faceState === 'tilted' && (
+  <div className="px-4 py-2 rounded-full bg-orange-500 text-white text-sm font-semibold animate-breathe">
+    Enderezá la cabeza
+  </div>
+)}
+  </div>
+
+  {/* Cuenta regresiva */}
+{countdown && (
+  <div className="absolute inset-0 flex items-center justify-center">
+    <div className="text-white text-8xl font-bold drop-shadow-lg animate-breathe">
+      {countdown}
+    </div>
+  </div>
+)}
+</div>
           </motion.div>
         ) : mode === 'uploading' ? (
           <motion.div

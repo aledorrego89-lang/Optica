@@ -10,7 +10,7 @@ const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [processedGlasses, setProcessedGlasses] = useState(null);
   const [processing, setProcessing] = useState(false);
-const [baseOffset] = useState({ x: 2, y: 4 }); //correccion de posicion lentes
+const [baseOffset] = useState({ x: 2, y: 8 }); //correccion de posicion lentes
   // When glasses change, remove the white background
   useEffect(() => {
     if (!glassesImage) {
@@ -144,8 +144,13 @@ className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden bg-
             ${position.y + baseOffset.y}px)
   scale(${scale})
 `,
-width: '45%',
-maxWidth: '180px',
+//*********************TAMAÑO LENTE *****************************
+// width: '45%',
+// maxWidth: '180px',
+width: '50%',
+maxWidth: '220px',
+// width: '55%',
+// maxWidth: '250px',
                 userSelect: 'none',
                 WebkitUserSelect: 'none',
                 touchAction: 'none',
